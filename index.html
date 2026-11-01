@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHAGA MUSIC</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #090909;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background: #111;
+  padding: 20px;
+  border-bottom: 1px solid #c9a227;
+  text-align: center;
+}
+
+.logo {
+  color: #d6b34a;
+  font-size: 27px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+button {
+  background: #c9a227;
+  color: #111;
+  border: none;
+  padding: 11px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f0d477;
+}
+
+main {
+  max-width: 950px;
+  margin: auto;
+  padding: 20px;
+}
+
+.hero {
+  background: linear-gradient(120deg, #30240a, #111);
+  border: 1px solid #c9a227;
+  border-radius: 15px;
+  padding: 35px 20px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  color: #e0bd54;
+  font-size: 32px;
+}
+
+h2 {
+  color: #d6b34a;
+}
+
+.panel {
+  background: #151515;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #222;
+  color: white;
+}
+
+input[type="file"] {
+  background: #111;
+}
+
+.song {
+  background: #202020;
+  border: 1px solid #383838;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 12px 0;
+}
+
+.song h3 {
+  margin-bottom: 5px;
+  color: #e0bd54;
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.small {
+  color: #aaa;
+  font-size: 13px;
+}
+
+#message {
+  color: #e0bd54;
+  margin: 10px 0;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #999;
+  border-top: 1px solid #333;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SHAGA MUSIC</div>
+  <p>Discover music. Discover artists.</p>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('library')">Music Library</button>
+  <button onclick="showSection('artist')">Artist Studio</button>
+  <button onclick="showSection('account')">Account</button>
+</nav>
+
+<main>
+
+<section id="home">
+  <div class="hero">
+    <h1>WELCOME TO SHAGA MUSIC</h1>
+    <p>Your world of music starts here.</p>
+    <button onclick="showSection('library')">Explore Music</button>
+  </div>
+
+  <h2>Recently Uploaded</h2>
+  <div id="homeSongs"></div>
+</section>
+
+<section id="library" style="display:none">
+  <h2>Music Library</h2>
+  <input id="search" placeholder="Search songs or artists..."
+  oninput="loadSongs()">
+  <div id="songList"></div>
+</section>
+
+<section id="artist" style="display:none">
+  <h2>Artist Studio</h2>
+
+  <div class="panel">
+    <h3>Upload Your Music</h3>
+    <p class="small">Upload audio that you own or have permission to distribute.</p>
+
+    <input id="songTitle" placeholder="Song title">
+    <input id="artistName" placeholder="Artist name">
+    <input id="genre" placeholder="Music genre">
+    <label>Choose audio file</label>
+    <input id="audioFile" type="file" accept="audio/*">
+
+    <label>Choose cover image (optional)</label>
+    <input id="coverFile" type="file" accept="image/*">
+
+    <button onclick="uploadSong()">Upload Song</button>
+    <p id="uploadMessage"></p>
+  </div>
+</section>
+
+<section id="account" style="display:none">
+  <h2>Artist Account</h2>
+
+  <div class="panel">
+    <h3>Create Account</h3>
+    <input id="email" type="email" placeholder="Email address">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="signUp()">Register</button>
+  </div>
+
+  <div class="panel">
+    <h3>Login</h3>
+    <input id="loginEmail" type="email" placeholder="Email address">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="logout()">Logout</button>
+    <p id="accountMessage"></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 SHAGA MUSIC</p>
+  <p>Music brings the world together.</p>
+</footer>
+
+<script type="module">
+
+import { createClient } from
+'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL =
+'https://ohyuasaubmfqeeybrhbs.supabase.co';
+
+const SUPABASE_PUBLISHABLE_KEY =
+'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+window.showSection = function(section) {
+  document.querySelectorAll('main section').forEach(item => {
+    item.style.display = 'none';
+  });
+
+  document.getElementById(section).style.display = 'block';
+
+  if (section === 'library' || section === 'home') {
+    loadSongs();
+  }
+};
+
+window.signUp = async function() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  document.getElementById('accountMessage').textContent =
+    error ? error.message : 'Registration started! Check your email if confirmation is required.';
+};
+
+window.login = async function() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  document.getElementById('accountMessage').textContent =
+    error ? error.message : 'You are logged in!';
+
+  if (!error) {
+    loadSongs();
+  }
+};
+
+window.logout = async function() {
+  const { error } = await supabase.auth.signOut();
+
+  document.getElementById('accountMessage').textContent =
+    error ? error.message : 'You have logged out.';
+};
+
+window.uploadSong = async function() {
+  const message = document.getElementById('uploadMessage');
+  message.textContent = 'Uploading...';
+
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
+
+  if (!user) {
+    message.textContent = 'Please log in before uploading.';
+    return;
+  }
+
+  const title = document.getElementById('songTitle').value.trim();
+  const artist = document.getElementById('artistName').value.trim();
+  const genre = document.getElementById('genre').value.trim();
+  const audio = document.getElementById('audioFile').files[0];
+  const cover = document.getElementById('coverFile').files[0];
+
+  if (!title || !artist || !audio) {
+    message.textContent = 'Enter the song title, artist and audio file.';
+    return;
+  }
+
+  if (audio.size > 20 * 1024 * 1024) {
+    message.textContent = 'Please choose an audio file under 20 MB.';
+    return;
+  }
+
+  const safeName = audio.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const audioPath = user.id + '/' + Date.now() + '-' + safeName;
+
+  const { error: audioError } = await supabase.storage
+    .from('music')
+    .upload(audioPath, audio);
+
+  if (audioError) {
+    message.textContent = audioError.message;
+    return;
+  }
+
+  let coverPath = null;
+
+  if (cover) {
+    const safeCover = cover.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    coverPath = user.id + '/' + Date.now() + '-' + safeCover;
+
+    const { error: coverError } = await supabase.storage
+      .from('music')
+      .upload(coverPath, cover);
+
+    if (coverError) {
+      await supabase.storage.from('music').remove([audioPath]);
+      message.textContent = coverError.message;
+      return;
+    }
+  }
+
+  const { error } = await supabase.from('tracks').insert({
+    user_id: user.id,
+    title: title,
+    artist_name: artist,
+    genre: genre,
+    audio_path: audioPath,
+    cover_path: coverPath,
+    published: true
+  });
+
+  if (error) {
+    await supabase.storage.from('music').remove([audioPath]);
+    if (coverPath) {
+      await supabase.storage.from('music').remove([coverPath]);
+    }
+    message.textContent = error.message;
+    return;
+  }
+
+  message.textContent = 'Your song has been uploaded!';
+  document.getElementById('songTitle').value = '';
+  document.getElementById('artistName').value = '';
+  document.getElementById('genre').value = '';
+  document.getElementById('audioFile').value = '';
+  document.getElementById('coverFile').value = '';
+
+  loadSongs();
+};
+
+async function loadSongs() {
+  const { data, error } = await supabase
+    .from('tracks')
+    .select('*')
+    .eq('published', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    document.getElementById('songList').textContent = error.message;
+    return;
+  }
+
+  const search = (
+    document.getElementById('search')?.value || ''
+  ).toLowerCase();
+
+  const filtered = data.filter(song =>
+    song.title.toLowerCase().includes(search) ||
+    song.artist_name.toLowerCase().includes(search)
+  );
+
+  const html = filtered.map(song => {
+    const audioUrl = supabase.storage
+      .from('music')
+      .getPublicUrl(song.audio_path).data.publicUrl;
+
+    const coverUrl = song.cover_path
+      ? supabase.storage.from('music').getPublicUrl(song.cover_path).data.publicUrl
+      : '';
+
+    return `
+      <div class="song">
+        ${coverUrl ? `<img src="${coverUrl}" alt="Cover for ${escapeHTML(song.title)}" style="width:90px;height:90px;object-fit:cover;border-radius:8px">` : ''}
+        <h3>${escapeHTML(song.title)}</h3>
+        <p>${escapeHTML(song.artist_name)}</p>
+        <p class="small">${escapeHTML(song.genre || 'Music')}</p>
+        <audio controls preload="none" src="${audioUrl}"></audio>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('songList').innerHTML =
+    html || '<p>No songs found yet. Be the first artist to upload!</p>';
+
+  document.getElementById('homeSongs').innerHTML =
+    html || '<p>No songs uploaded yet.</p>';
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+loadSongs();
+
+</script>
+
+</body>
+</html>
