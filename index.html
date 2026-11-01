@@ -2,308 +2,432 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SHAGA MUSIC</title>
 
 <style>
 *{box-sizing:border-box}
-
-body{
- margin:0;
- background:#121212;
- color:white;
- font-family:Arial,sans-serif;
- padding-bottom:180px;
-}
-
-header{
- display:flex;
- align-items:center;
- gap:12px;
- padding:18px;
- position:sticky;
- top:0;
- background:#121212;
- z-index:5;
-}
-
-.logo{
- background:#1ed760;
- color:black;
- width:42px;
- height:42px;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- font-weight:bold;
- font-size:22px;
-}
-
-.brand{
- font-size:20px;
- font-weight:bold;
- letter-spacing:2px;
-}
-
-nav.top{
- display:flex;
- gap:10px;
- padding:0 15px 15px;
- overflow-x:auto;
-}
-
-.chip{
- background:#303030;
- color:white;
- border:0;
- padding:12px 22px;
- border-radius:30px;
- white-space:nowrap;
-}
-
-.chip.active{
- background:#1ed760;
- color:black;
-}
-
-main{
- padding:12px 15px;
- max-width:1000px;
- margin:auto;
-}
-
+body{margin:0;background:#121212;color:white;font-family:Arial,sans-serif;padding-bottom:160px}
+header{padding:18px;display:flex;align-items:center;gap:12px;background:#121212}
+.logo{background:#1ed760;color:black;border-radius:50%;width:42px;height:42px;display:grid;place-items:center;font-size:24px;font-weight:bold}
+.brand{font-weight:bold;letter-spacing:2px}
+.top{display:flex;gap:10px;padding:5px 15px 15px;overflow-x:auto}
+.chip{background:#303030;color:white;border:0;border-radius:25px;padding:12px 20px;white-space:nowrap}
+.chip.active{background:#1ed760;color:black}
+main{padding:12px 15px;max-width:900px;margin:auto}
 .page{display:none}
 .page.active{display:block}
+h2{font-size:23px;margin-top:28px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick div{background:#292929;border-radius:7px;display:flex;align-items:center;gap:10px;overflow:hidden;font-weight:bold}
+.quick img{width:75px;height:75px;object-fit:cover}
+.feature{display:flex;background:#242424;border-radius:12px;overflow:hidden;margin-top:15px}
+.feature img{width:43%;object-fit:cover}
+.feature div{padding:15px}
+.feature p{color:#bbb;line-height:1.4}
+.horizontal{display:flex;gap:15px;overflow-x:auto}
+.mix{min-width:155px;width:155px}
+.mix img{width:155px;height:155px;object-fit:cover;border-radius:8px}
+.mix p{color:#aaa;font-size:13px}
+input{width:100%;padding:14px;margin:8px 0;background:#292929;border:1px solid #444;border-radius:7px;color:white}
+.green{background:#1ed760;color:black;border:0;padding:13px 22px;border-radius:25px;font-weight:bold}
+.panel{background:#242424;padding:18px;border-radius:12px;margin:15px 0}
+.song{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #333}
+.song img{width:55px;height:55px;object-fit:cover;border-radius:6px}
+.songinfo{flex:1;min-width:0}
+.songinfo p{color:#aaa;font-size:13px;margin:5px 0}
+.song button{background:none;border:0;color:#1ed760;font-size:22px}
+.bottomplayer{position:fixed;bottom:75px;left:10px;right:10px;background:#333;border-radius:10px;padding:10px;display:none;align-items:center;gap:10px;z-index:5}
+.bottomplayer img{width:45px;height:45px;object-fit:cover;border-radius:5px}
+.playerinfo{flex:1;min-width:0}
+.playerinfo p{font-size:12px;color:#bbb;margin:5px 0}
+.bottomplayer button{background:none;border:0;color:white;font-size:22px}
+.bottomnav{position:fixed;bottom:0;left:0;right:0;height:75px;background:#080808;display:flex;justify-content:space-around;align-items:center;z-index:10}
+.bottomnav button{background:none;border:0;color:#aaa;font-size:11px;display:flex;flex-direction:column;gap:5px;align-items:center}
+.bottomnav button span{font-size:23px}
+.bottomnav button.active{color:#1ed760}
+.msg{color:#1ed760;font-size:14px;overflow-wrap:anywhere}
+</style>
+</head>
 
-h2{
- font-size:24px;
- margin-top:30px;
+<body>
+
+<header>
+ <div class="logo">S</div>
+ <div class="brand">SHAGA MUSIC</div>
+</header>
+
+<nav class="top">
+ <button class="chip active">All</button>
+ <button class="chip">Music</button>
+ <button class="chip">Podcasts</button>
+ <button class="chip">Audiobooks</button>
+</nav>
+
+<main>
+
+<section id="home" class="page active">
+
+ <div class="quick">
+  <div><img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=200" alt=""><span>Michael Jackson Mix</span></div>
+  <div><img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200" alt=""><span>My Dear</span></div>
+  <div><img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=200" alt=""><span>Grime Mix</span></div>
+  <div><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200" alt=""><span>Afrobeats Mix</span></div>
+ </div>
+
+ <h2>Picked for you</h2>
+
+ <div class="feature">
+  <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400" alt="">
+  <div>
+   <p>SHAGA MUSIC PLAYLIST</p>
+   <h3>Discover New Music</h3>
+   <p>Find your next favourite artist.</p>
+   <button class="green" id="explore">Explore ▶</button>
+  </div>
+ </div>
+
+ <h2>Your top mixes</h2>
+
+ <div class="horizontal">
+  <div class="mix">
+   <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300" alt="">
+   <h3>Afrobeats Mix</h3><p>African sounds</p>
+  </div>
+  <div class="mix">
+   <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300" alt="">
+   <h3>Rap Mix</h3><p>Hip-hop favourites</p>
+  </div>
+  <div class="mix">
+   <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300" alt="">
+   <h3>Pop Mix</h3><p>Popular music</p>
+  </div>
+ </div>
+
+ <h2>Latest uploads</h2>
+ <div id="homeSongs">Loading music...</div>
+
+</section>
+
+<section id="search" class="page">
+ <h2>Search</h2>
+ <input id="searchInput" placeholder="Search songs or artists">
+ <div id="searchResults"></div>
+</section>
+
+<section id="library" class="page">
+ <h2>Your Library</h2>
+ <div id="librarySongs">Your music will appear here.</div>
+</section>
+
+<section id="premium" class="page">
+ <h2>SHAGA PREMIUM</h2>
+ <div class="panel">
+  <h3>Gold</h3>
+  <h2>4,000 RWF/month</h2>
+  <p>Enjoy a premium listening experience.</p>
+  <button class="green" id="gold">Explore Gold</button>
+ </div>
+ <div class="panel">
+  <h3>VIP</h3>
+  <h2>6,000 RWF/month</h2>
+  <p>Discover more exclusive music.</p>
+  <button class="green" id="vip">Explore VIP</button>
+ </div>
+ <p class="msg" id="premiumMsg">Subscriptions are not activated yet.</p>
+</section>
+
+<section id="create" class="page">
+ <h2>Artist Studio</h2>
+
+ <div class="panel">
+  <h3>Create Account</h3>
+  <input id="regEmail" type="email" placeholder="Email">
+  <input id="regPassword" type="password" placeholder="Password">
+  <button class="green" id="register">Register</button>
+
+  <h3>Login</h3>
+  <input id="loginEmail" type="email" placeholder="Email">
+  <input id="loginPassword" type="password" placeholder="Password">
+  <button class="green" id="login">Login</button>
+  <button class="green" id="logout">Logout</button>
+  <p class="msg" id="accountMsg"></p>
+ </div>
+
+ <div class="panel">
+  <h3>Upload your music</h3>
+  <input id="title" placeholder="Song title">
+  <input id="artist" placeholder="Artist name">
+  <input id="genre" placeholder="Genre">
+  <p>Music file</p>
+  <input id="audioFile" type="file" accept="audio/*">
+  <p>Cover image</p>
+  <input id="coverFile" type="file" accept="image/*">
+  <button class="green" id="upload">Upload Music</button>
+  <p class="msg" id="uploadMsg"></p>
+ </div>
+
+ <div class="panel">
+  <h3>SHAGA MUSIC ORIGINALS</h3>
+  <p>Discover the next generation of music stars.</p>
+ </div>
+</section>
+
+</main>
+
+<div class="bottomplayer" id="bottomPlayer">
+ <img id="playerCover" alt="">
+ <div class="playerinfo">
+  <strong id="playerTitle">No song playing</strong>
+  <p id="playerArtist">SHAGA MUSIC</p>
+ </div>
+ <button id="playPause">▶</button>
+</div>
+
+<audio id="audioPlayer"></audio>
+
+<nav class="bottomnav">
+ <button class="active" data-page="home"><span>⌂</span>Home</button>
+ <button data-page="search"><span>⌕</span>Search</button>
+ <button data-page="library"><span>▤</span>Your Library</button>
+ <button data-page="premium"><span>◎</span>Premium</button>
+ <button data-page="create"><span>＋</span>Create</button>
+</nav>
+
+<script type="module">
+
+import { createClient } from
+'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const supabase=createClient(
+ 'https://ohyuasaubmfqeeybrhbs.supabase.co',
+ 'sb_publishable_2TI-TmUvPk48Z2WW3UN1Uw_E5KmXaaM'
+);
+
+const $=id=>document.getElementById(id);
+let songs=[];
+
+function page(name){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ $(name).classList.add('active');
+
+ document.querySelectorAll('.bottomnav button').forEach(x=>{
+  x.classList.toggle('active',x.dataset.page===name);
+ });
+
+ if(['home','library','search'].includes(name)) loadSongs();
 }
 
-.quick-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
+document.querySelectorAll('.bottomnav button').forEach(button=>{
+ button.addEventListener('click',()=>page(button.dataset.page));
+});
+
+$('explore').onclick=()=>page('search');
+
+$('searchInput').addEventListener('input',renderSongs);
+
+document.querySelectorAll('.chip').forEach(button=>{
+ button.onclick=()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+  button.classList.add('active');
+ };
+});
+
+function safe(value){
+ return String(value||'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ })[c]);
 }
 
-.quick-card{
- display:flex;
- align-items:center;
- background:#292929;
- border-radius:7px;
- overflow:hidden;
- min-height:80px;
- cursor:pointer;
+$('register').onclick=async()=>{
+ const email=$('regEmail').value.trim();
+ const password=$('regPassword').value;
+
+ if(!email||password.length<6){
+  $('accountMsg').textContent='Enter an email and a password of at least 6 characters.';
+  return;
+ }
+
+ $('accountMsg').textContent='Creating account...';
+
+ const {data,error}=await supabase.auth.signUp({email,password});
+
+ $('accountMsg').textContent=error?error.message:
+  (data.session?'Account created!':'Account created. Check your email if confirmation is required.');
+};
+
+$('login').onclick=async()=>{
+ const {error}=await supabase.auth.signInWithPassword({
+  email:$('loginEmail').value.trim(),
+  password:$('loginPassword').value
+ });
+
+ $('accountMsg').textContent=error?error.message:'You are logged in!';
+};
+
+$('logout').onclick=async()=>{
+ const {error}=await supabase.auth.signOut();
+ $('accountMsg').textContent=error?error.message:'Logged out.';
+};
+
+$('upload').onclick=async()=>{
+ const title=$('title').value.trim();
+ const artist=$('artist').value.trim();
+ const audio=$('audioFile').files[0];
+ const cover=$('coverFile').files[0];
+
+ if(!title||!artist||!audio){
+  $('uploadMsg').textContent='Enter the title, artist and audio file.';
+  return;
+ }
+
+ if(audio.size>20*1024*1024||(cover&&cover.size>5*1024*1024)){
+  $('uploadMsg').textContent='Audio limit: 20 MB. Cover limit: 5 MB.';
+  return;
+ }
+
+ $('uploadMsg').textContent='Uploading...';
+
+ const {data:userData,error:userError}=await supabase.auth.getUser();
+
+ if(userError||!userData.user){
+  $('uploadMsg').textContent='Please log in first.';
+  return;
+ }
+
+ const user=userData.user;
+ const clean=f=>f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+ const audioPath=user.id+'/'+Date.now()+'-'+clean(audio);
+
+ const {error:audioError}=await supabase.storage.from('music').upload(audioPath,audio);
+
+ if(audioError){
+  $('uploadMsg').textContent=audioError.message;
+  return;
+ }
+
+ let coverPath=null;
+
+ if(cover){
+  coverPath=user.id+'/'+Date.now()+'-'+clean(cover);
+  const {error}=await supabase.storage.from('music').upload(coverPath,cover);
+
+  if(error){
+   await supabase.storage.from('music').remove([audioPath]);
+   $('uploadMsg').textContent=error.message;
+   return;
+  }
+ }
+
+ const {error}=await supabase.from('tracks').insert({
+  user_id:user.id,
+  title,
+  artist_name:artist,
+  genre:$('genre').value.trim(),
+  audio_path:audioPath,
+  cover_path:coverPath,
+  published:true
+ });
+
+ if(error){
+  await supabase.storage.from('music').remove([audioPath]);
+  if(coverPath) await supabase.storage.from('music').remove([coverPath]);
+  $('uploadMsg').textContent=error.message;
+  return;
+ }
+
+ $('uploadMsg').textContent='Music uploaded successfully!';
+ loadSongs();
+};
+
+async function loadSongs(){
+ const {data,error}=await supabase
+  .from('tracks')
+  .select('*')
+  .eq('published',true)
+  .order('created_at',{ascending:false});
+
+ if(error){
+  $('homeSongs').textContent='Music loading error: '+error.message;
+  $('librarySongs').textContent=error.message;
+  $('searchResults').textContent=error.message;
+  return;
+ }
+
+ songs=data||[];
+ renderSongs();
 }
 
-.quick-card img{
- width:85px;
- height:80px;
- object-fit:cover;
+function renderSongs(){
+ const q=$('searchInput').value.toLowerCase();
+
+ const filtered=songs.filter(s=>
+  (s.title||'').toLowerCase().includes(q)||
+  (s.artist_name||'').toLowerCase().includes(q)
+ );
+
+ const html=filtered.map(song=>{
+  const index=songs.indexOf(song);
+  const audioURL=supabase.storage.from('music').getPublicUrl(song.audio_path).data.publicUrl;
+  const coverURL=song.cover_path?
+   supabase.storage.from('music').getPublicUrl(song.cover_path).data.publicUrl:'';
+
+  return `<div class="song">
+   <img src="${coverURL||'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100'}" alt="">
+   <div class="songinfo">
+    <strong>${safe(song.title)}</strong>
+    <p>${safe(song.artist_name)}</p>
+   </div>
+   <button data-play="${index}">▶</button>
+  </div>`;
+ }).join('');
+
+ $('homeSongs').innerHTML=html||'<p>No songs uploaded yet.</p>';
+ $('librarySongs').innerHTML=html||'<p>Your library is waiting for music.</p>';
+ $('searchResults').innerHTML=html||'<p>No matching songs found.</p>';
+
+ document.querySelectorAll('[data-play]').forEach(button=>{
+  button.onclick=()=>playSong(Number(button.dataset.play));
+ });
 }
 
-.quick-card span{
- padding:10px;
- font-weight:bold;
+function playSong(index){
+ const song=songs[index];
+ if(!song)return;
+
+ const audioURL=supabase.storage.from('music').getPublicUrl(song.audio_path).data.publicUrl;
+ const coverURL=song.cover_path?
+  supabase.storage.from('music').getPublicUrl(song.cover_path).data.publicUrl:'';
+
+ $('audioPlayer').src=audioURL;
+ $('playerTitle').textContent=song.title;
+ $('playerArtist').textContent=song.artist_name;
+ $('playerCover').src=coverURL||'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100';
+ $('bottomPlayer').style.display='flex';
+
+ $('audioPlayer').play()
+  .then(()=>$('playPause').textContent='Ⅱ')
+  .catch(()=>$('playPause').textContent='▶');
 }
 
-.featured{
- display:flex;
- background:#242424;
- border-radius:12px;
- overflow:hidden;
- margin-top:15px;
- min-height:210px;
-}
+$('playPause').onclick=()=>{
+ const audio=$('audioPlayer');
 
-.featured img{
- width:45%;
- object-fit:cover;
-}
+ if(audio.paused){
+  audio.play().then(()=>$('playPause').textContent='Ⅱ');
+ }else{
+  audio.pause();
+  $('playPause').textContent='▶';
+ }
+};
 
-.feature-info{
- padding:18px;
- display:flex;
- flex-direction:column;
- justify-content:center;
-}
+$('audioPlayer').onended=()=>$('playPause').textContent='▶';
 
-.feature-info p{
- color:#bbb;
- line-height:1.5;
-}
+$('gold').onclick=()=>$('premiumMsg').textContent='Gold subscriptions are coming soon.';
+$('vip').onclick=()=>$('premiumMsg').textContent='VIP subscriptions are coming soon.';
 
-.round-play{
- width:48px;
- height:48px;
- border-radius:50%;
- background:#1ed760;
- border:0;
- font-size:22px;
- margin-top:10px;
-}
+loadSongs();
 
-.horizontal{
- display:flex;
- gap:15px;
- overflow-x:auto;
- padding:10px 0 20px;
-}
-
-.mix{
- min-width:170px;
- width:170px;
- cursor:pointer;
-}
-
-.mix img{
- width:170px;
- height:170px;
- border-radius:8px;
- object-fit:cover;
-}
-
-.mix h3{
- font-size:15px;
- margin-bottom:5px;
-}
-
-.mix p{
- color:#aaa;
- font-size:13px;
- line-height:1.4;
-}
-
-input{
- width:100%;
- padding:15px;
- border-radius:8px;
- border:1px solid #444;
- background:#252525;
- color:white;
- margin:10px 0;
-}
-
-button{
- cursor:pointer;
-}
-
-.green{
- background:#1ed760;
- color:black;
- border:0;
- border-radius:30px;
- padding:13px 23px;
- font-weight:bold;
-}
-
-.dark-button{
- background:#303030;
- color:white;
- border:0;
- border-radius:25px;
- padding:12px 20px;
- margin:5px;
-}
-
-.song{
- display:flex;
- align-items:center;
- gap:12px;
- padding:12px 5px;
- border-bottom:1px solid #292929;
- cursor:pointer;
-}
-
-.song img{
- width:55px;
- height:55px;
- object-fit:cover;
- border-radius:6px;
-}
-
-.song-info{
- flex:1;
- min-width:0;
-}
-
-.song-info h3{
- font-size:15px;
- margin:0 0 5px;
-}
-
-.song-info p{
- margin:0;
- color:#aaa;
- font-size:13px;
-}
-
-.song button{
- background:none;
- color:#1ed760;
- border:0;
- font-size:22px;
-}
-
-.panel{
- background:#242424;
- padding:20px;
- border-radius:12px;
- margin:15px 0;
-}
-
-.bottom-player{
- position:fixed;
- bottom:75px;
- left:10px;
- right:10px;
- background:#333;
- border-radius:10px;
- padding:10px;
- display:none;
- align-items:center;
- gap:10px;
- z-index:10;
-}
-
-.bottom-player img{
- width:45px;
- height:45px;
- border-radius:5px;
- object-fit:cover;
-}
-
-.player-info{
- flex:1;
- min-width:0;
-}
-
-.player-info strong{
- display:block;
- font-size:14px;
-}
-
-.player-info span{
- color:#bbb;
- font-size:12px;
-}
-
-.player-controls button{
- background:none;
- border:0;
- color:white;
- font-size:22px;
-}
-
-.bottom-nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- height:75px;
- background:#080808;
- display:flex;
- justify-content:space-around;
- align-items:center;
- z-index:20
+</script>
+</body>
+ </html>
