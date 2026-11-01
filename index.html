@@ -6,278 +6,304 @@
 <title>SHAGA MUSIC</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#121212;
+ color:white;
+ font-family:Arial,sans-serif;
+ padding-bottom:180px;
 }
 
-body {
-  margin: 0;
-  background: #080808;
-  color: white;
-  font-family: Arial, sans-serif;
+header{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:18px;
+ position:sticky;
+ top:0;
+ background:#121212;
+ z-index:5;
 }
 
-header {
-  background: #111;
-  padding: 22px;
-  text-align: center;
-  border-bottom: 1px solid #d4af37;
+.logo{
+ background:#1ed760;
+ color:black;
+ width:42px;
+ height:42px;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:bold;
+ font-size:22px;
 }
 
-.logo {
-  color: #d4af37;
-  font-size: 30px;
-  font-weight: bold;
-  letter-spacing: 4px;
+.brand{
+ font-size:20px;
+ font-weight:bold;
+ letter-spacing:2px;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 15px;
-  background: #151515;
+nav.top{
+ display:flex;
+ gap:10px;
+ padding:0 15px 15px;
+ overflow-x:auto;
 }
 
-button {
-  background: #d4af37;
-  color: black;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
+.chip{
+ background:#303030;
+ color:white;
+ border:0;
+ padding:12px 22px;
+ border-radius:30px;
+ white-space:nowrap;
 }
 
-button:hover {
-  background: #f5d76e;
+.chip.active{
+ background:#1ed760;
+ color:black;
 }
 
-main {
-  max-width: 950px;
-  margin: auto;
-  padding: 20px;
+main{
+ padding:12px 15px;
+ max-width:1000px;
+ margin:auto;
 }
 
-section {
-  display: none;
+.page{display:none}
+.page.active{display:block}
+
+h2{
+ font-size:24px;
+ margin-top:30px;
 }
 
-#home {
-  display: block;
+.quick-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
 }
 
-.hero {
-  background: linear-gradient(130deg,#30240a,#111);
-  border: 1px solid #d4af37;
-  border-radius: 15px;
-  padding: 55px 20px;
-  text-align: center;
+.quick-card{
+ display:flex;
+ align-items:center;
+ background:#292929;
+ border-radius:7px;
+ overflow:hidden;
+ min-height:80px;
+ cursor:pointer;
 }
 
-.hero h1 {
-  color: #d4af37;
-  font-size: 35px;
+.quick-card img{
+ width:85px;
+ height:80px;
+ object-fit:cover;
 }
 
-.panel {
-  background: #151515;
-  padding: 22px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border: 1px solid #333;
+.quick-card span{
+ padding:10px;
+ font-weight:bold;
 }
 
-h2, h3 {
-  color: #d4af37;
+.featured{
+ display:flex;
+ background:#242424;
+ border-radius:12px;
+ overflow:hidden;
+ margin-top:15px;
+ min-height:210px;
 }
 
-input {
-  width: 100%;
-  padding: 13px;
-  margin: 9px 0;
-  border: 1px solid #555;
-  background: #222;
-  color: white;
-  border-radius: 6px;
+.featured img{
+ width:45%;
+ object-fit:cover;
 }
 
-.song {
-  background: #181818;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 10px;
-  border: 1px solid #333;
+.feature-info{
+ padding:18px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
 }
 
-.song img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
+.feature-info p{
+ color:#bbb;
+ line-height:1.5;
 }
 
-audio {
-  width: 100%;
-  margin-top: 10px;
+.round-play{
+ width:48px;
+ height:48px;
+ border-radius:50%;
+ background:#1ed760;
+ border:0;
+ font-size:22px;
+ margin-top:10px;
 }
 
-.message {
-  color: #e5c45c;
-  overflow-wrap: anywhere;
+.horizontal{
+ display:flex;
+ gap:15px;
+ overflow-x:auto;
+ padding:10px 0 20px;
 }
 
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #999;
-  border-top: 1px solid #333;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <div class="logo">SHAGA MUSIC</div>
-  <p>Discover Music. Discover Artists.</p>
-</header>
-
-<nav>
-  <button id="homeBtn">Home</button>
-  <button id="libraryBtn">Music Library</button>
-  <button id="artistBtn">Artist Studio</button>
-  <button id="accountBtn">Account</button>
-</nav>
-
-<main>
-
-<section id="home">
-  <div class="hero">
-    <h1>WELCOME TO SHAGA MUSIC</h1>
-    <p>Your music. Your world. Your stage.</p>
-    <button id="exploreBtn">Explore Music</button>
-  </div>
-
-  <h2>Latest Music</h2>
-  <div id="homeSongs"></div>
-</section>
-
-<section id="library">
-  <h2>Music Library</h2>
-
-  <input id="searchInput"
-  placeholder="Search songs or artists...">
-
-  <div id="songList"></div>
-</section>
-
-<section id="artist">
-  <h2>Artist Studio</h2>
-
-  <div class="panel">
-    <h3>Upload Your Music</h3>
-
-    <p>Share your music with the SHAGA MUSIC community.</p>
-
-    <input id="songTitle"
-    placeholder="Song title">
-
-    <input id="artistName"
-    placeholder="Artist name">
-
-    <input id="genre"
-    placeholder="Music genre">
-
-    <p>Choose your music file:</p>
-    <input id="audioFile" type="file" accept="audio/*">
-
-    <p>Choose your song cover:</p>
-    <input id="coverFile" type="file" accept="image/*">
-
-    <button id="uploadBtn">Upload Music</button>
-
-    <p id="uploadMessage" class="message"></p>
-  </div>
-</section>
-
-<section id="account">
-
-  <h2>Artist Account</h2>
-
-  <div class="panel">
-    <h3>Create an Account</h3>
-
-    <input id="registerEmail"
-    type="email" placeholder="Email address">
-
-    <input id="registerPassword"
-    type="password" placeholder="Password (at least 6 characters)">
-
-    <button id="registerBtn">Register</button>
-  </div>
-
-  <div class="panel">
-    <h3>Login</h3>
-
-    <input id="loginEmail"
-    type="email" placeholder="Email address">
-
-    <input id="loginPassword"
-    type="password" placeholder="Password">
-
-    <button id="loginBtn">Login</button>
-
-    <button id="logoutBtn">Logout</button>
-
-    <p id="accountMessage" class="message"></p>
-  </div>
-
-</section>
-
-</main>
-
-<footer>
-  <h3>SHAGA MUSIC</h3>
-  <p>Music connects the world.</p>
-  <p>© 2026 SHAGA MUSIC</p>
-</footer>
-
-<script type="module">
-
-import { createClient } from
-'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-const SUPABASE_URL =
-'https://ohyuasaubmfqeeybrhbs.supabase.co';
-
-const SUPABASE_PUBLISHABLE_KEY =
-'PASTE_YOUR_PUBLISHABLE_KEY_HERE'sb_publishable_2TI-TmUvPk48Z2WW3UN1Uw_E5KmXaaM
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-const $ = id => document.getElementById(id);
-
-function message(id, text) {
-  $(id).textContent = text;
+.mix{
+ min-width:170px;
+ width:170px;
+ cursor:pointer;
 }
 
-function showPage(name) {
-  document.querySelectorAll('main section').forEach(section => {
-    section.style.display = 'none';
-  });
-
-  $(name).style.display = 'block';
-
-  if (name === 'library' || name === 'home') {
-    loadMusic();
-  }
+.mix img{
+ width:170px;
+ height:170px;
+ border-radius:8px;
+ object-fit:cover;
 }
 
-$('homeBtn').onclick = () => showPage('home');
-$('libraryBtn').onclick = () => showPage('library');
-$('artistBtn').onclick = () => show
+.mix h3{
+ font-size:15px;
+ margin-bottom:5px;
+}
+
+.mix p{
+ color:#aaa;
+ font-size:13px;
+ line-height:1.4;
+}
+
+input{
+ width:100%;
+ padding:15px;
+ border-radius:8px;
+ border:1px solid #444;
+ background:#252525;
+ color:white;
+ margin:10px 0;
+}
+
+button{
+ cursor:pointer;
+}
+
+.green{
+ background:#1ed760;
+ color:black;
+ border:0;
+ border-radius:30px;
+ padding:13px 23px;
+ font-weight:bold;
+}
+
+.dark-button{
+ background:#303030;
+ color:white;
+ border:0;
+ border-radius:25px;
+ padding:12px 20px;
+ margin:5px;
+}
+
+.song{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:12px 5px;
+ border-bottom:1px solid #292929;
+ cursor:pointer;
+}
+
+.song img{
+ width:55px;
+ height:55px;
+ object-fit:cover;
+ border-radius:6px;
+}
+
+.song-info{
+ flex:1;
+ min-width:0;
+}
+
+.song-info h3{
+ font-size:15px;
+ margin:0 0 5px;
+}
+
+.song-info p{
+ margin:0;
+ color:#aaa;
+ font-size:13px;
+}
+
+.song button{
+ background:none;
+ color:#1ed760;
+ border:0;
+ font-size:22px;
+}
+
+.panel{
+ background:#242424;
+ padding:20px;
+ border-radius:12px;
+ margin:15px 0;
+}
+
+.bottom-player{
+ position:fixed;
+ bottom:75px;
+ left:10px;
+ right:10px;
+ background:#333;
+ border-radius:10px;
+ padding:10px;
+ display:none;
+ align-items:center;
+ gap:10px;
+ z-index:10;
+}
+
+.bottom-player img{
+ width:45px;
+ height:45px;
+ border-radius:5px;
+ object-fit:cover;
+}
+
+.player-info{
+ flex:1;
+ min-width:0;
+}
+
+.player-info strong{
+ display:block;
+ font-size:14px;
+}
+
+.player-info span{
+ color:#bbb;
+ font-size:12px;
+}
+
+.player-controls button{
+ background:none;
+ border:0;
+ color:white;
+ font-size:22px;
+}
+
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ height:75px;
+ background:#080808;
+ display:flex;
+ justify-content:space-around;
+ align-items:center;
+ z-index:20
