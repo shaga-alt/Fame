@@ -423,8 +423,15 @@ $('playPause').onclick=()=>{
 
 $('audioPlayer').onended=()=>$('playPause').textContent='▶';
 
-$('gold').onclick=()=>$('premiumMsg').textContent='Gold subscriptions are coming soon.';
-$('vip').onclick=()=>$('premiumMsg').textContent='VIP subscriptions are coming soon.';
+$('gold').onclick=()=>{
+  $('premiumMsg').textContent=
+  'TEST MODE: Gold selected! 4,000 RWF/month. No payment has been made.';
+};
+
+$('vip').onclick=()=>{
+  $('premiumMsg').textContent=
+  'TEST MODE: VIP selected! 6,000 RWF/month. No payment has been made.';
+};
 
 loadSongs();
 
