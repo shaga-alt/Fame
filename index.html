@@ -260,20 +260,32 @@ function safe(value){
 }
 
 $('register').onclick=async()=>{
- const email=$('regEmail').value.trim();
- const password=$('regPassword').value;
+  const name=$('regName').value.trim();
+  const username=$('regUsername').value.trim();
+  const email=$('regEmail').value.trim();
+  const password=$('regPassword').value;
 
- if(!email||password.length<6){
-  $('accountMsg').textContent='Enter an email and a password of at least 6 characters.';
-  return;
- }
+  if(!name || !username || !email || password.length<6){
+    $('accountMsg').textContent='Fill in all fields. Password must be at least 6 characters.';
+    return;
+  }
 
- $('accountMsg').textContent='Creating account...';
+  $('accountMsg').textContent='Creating account...';
 
- const {data,error}=await supabase.auth.signUp({email,password});
+  const {data,error}=await supabase.auth.signUp({
+    email,
+    password,
+    options:{
+      data:{
+        full_name:name,
+        username:username
+      }
+    }
+  });
 
- $('accountMsg').textContent=error?error.message:
-  (data.session?'Account created!':'Account created. Check your email if confirmation is required.');
+  $('accountMsg').textContent=error
+    ? error.message
+    : 'Account created! Welcome to SHAGA MUSIC.';
 };
 
 $('login').onclick=async()=>{
