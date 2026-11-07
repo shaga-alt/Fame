@@ -268,7 +268,7 @@ $('register').onclick=async()=>{
   if(!name || !username || !email || password.length<6){
     $('accountMsg').textContent='Fill in all fields. Password must be at least 6 characters.';
     return;
-  }
+  }<input id="regEmail" type="email" placeholder="Email address">
 
   $('accountMsg').textContent='Creating account...';
 
