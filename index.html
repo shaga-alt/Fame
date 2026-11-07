@@ -1,472 +1,1335 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SHAGA MUSIC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07130d">
+<title>SHAGA MUSIC | Sound Without Limits</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#121212;color:white;font-family:Arial,sans-serif;padding-bottom:160px}
-header{padding:18px;display:flex;align-items:center;gap:12px;background:#121212}
-.logo{background:#1ed760;color:black;border-radius:50%;width:42px;height:42px;display:grid;place-items:center;font-size:24px;font-weight:bold}
-.brand{font-weight:bold;letter-spacing:2px}
-.top{display:flex;gap:10px;padding:5px 15px 15px;overflow-x:auto}
-.chip{background:#303030;color:white;border:0;border-radius:25px;padding:12px 20px;white-space:nowrap}
-.chip.active{background:#1ed760;color:black}
-main{padding:12px 15px;max-width:900px;margin:auto}
-.page{display:none}
-.page.active{display:block}
-h2{font-size:23px;margin-top:28px}
-.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.quick div{background:#292929;border-radius:7px;display:flex;align-items:center;gap:10px;overflow:hidden;font-weight:bold}
-.quick img{width:75px;height:75px;object-fit:cover}
-.feature{display:flex;background:#242424;border-radius:12px;overflow:hidden;margin-top:15px}
-.feature img{width:43%;object-fit:cover}
-.feature div{padding:15px}
-.feature p{color:#bbb;line-height:1.4}
-.horizontal{display:flex;gap:15px;overflow-x:auto}
-.mix{min-width:155px;width:155px}
-.mix img{width:155px;height:155px;object-fit:cover;border-radius:8px}
-.mix p{color:#aaa;font-size:13px}
-input{width:100%;padding:14px;margin:8px 0;background:#292929;border:1px solid #444;border-radius:7px;color:white}
-.green{background:#1ed760;color:black;border:0;padding:13px 22px;border-radius:25px;font-weight:bold}
-.panel{background:#242424;padding:18px;border-radius:12px;margin:15px 0}
-.song{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #333}
-.song img{width:55px;height:55px;object-fit:cover;border-radius:6px}
-.songinfo{flex:1;min-width:0}
-.songinfo p{color:#aaa;font-size:13px;margin:5px 0}
-.song button{background:none;border:0;color:#1ed760;font-size:22px}
-.bottomplayer{position:fixed;bottom:75px;left:10px;right:10px;background:#333;border-radius:10px;padding:10px;display:none;align-items:center;gap:10px;z-index:5}
-.bottomplayer img{width:45px;height:45px;object-fit:cover;border-radius:5px}
-.playerinfo{flex:1;min-width:0}
-.playerinfo p{font-size:12px;color:#bbb;margin:5px 0}
-.bottomplayer button{background:none;border:0;color:white;font-size:22px}
-.bottomnav{position:fixed;bottom:0;left:0;right:0;height:75px;background:#080808;display:flex;justify-content:space-around;align-items:center;z-index:10}
-.bottomnav button{background:none;border:0;color:#aaa;font-size:11px;display:flex;flex-direction:column;gap:5px;align-items:center}
-.bottomnav button span{font-size:23px}
-.bottomnav button.active{color:#1ed760}
-.msg{color:#1ed760;font-size:14px;overflow-wrap:anywhere}
+:root {
+ --bg:#07130d;
+ --panel:#102018;
+ --green:#39e879;
+ --muted:#a6b7ab;
+ --gold:#f4cf68;
+ --line:#294234;
+}
+
+* {
+ box-sizing:border-box;
+}
+
+body {
+ margin:0;
+ background:radial-gradient(circle at 80% 0%,#173c27,#07130d 55%);
+ color:white;
+ font-family:Arial,sans-serif;
+ padding-bottom:150px;
+}
+
+button,input {
+ font:inherit;
+}
+
+button {
+ cursor:pointer;
+}
+
+header {
+ max-width:1100px;
+ margin:auto;
+ padding:20px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.brand {
+ font-size:20px;
+ font-weight:900;
+ letter-spacing:2px;
+}
+
+.logo {
+ background:var(--green);
+ color:#07130d;
+ padding:12px;
+ border-radius:13px;
+ font-weight:900;
+ font-size:22px;
+}
+
+.account {
+ color:var(--green);
+ font-size:12px;
+}
+
+main {
+ max-width:1100px;
+ margin:auto;
+ padding:15px;
+}
+
+.page {
+ display:none;
+}
+
+.page.active {
+ display:block;
+}
+
+.hero {
+ background:linear-gradient(120deg,#174d2d,#102018);
+ border:1px solid #28583a;
+ border-radius:22px;
+ padding:25px;
+ display:grid;
+ grid-template-columns:1.4fr .8fr;
+ gap:20px;
+}
+
+.hero h1 {
+ font-size:clamp(35px,6vw,58px);
+ line-height:1.05;
+}
+
+.hero p {
+ color:#c4d8ca;
+ line-height:1.6;
+}
+
+.hero-art {
+ min-height:190px;
+ border-radius:18px;
+ background:
+ linear-gradient(#39e87933,#07130d88),
+ url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=700')
+ center/cover;
+ display:grid;
+ place-items:center;
+ font-size:65px;
+}
+
+.green {
+ background:var(--green);
+ color:#07130d;
+ border:0;
+ border-radius:30px;
+ padding:12px 20px;
+ font-weight:bold;
+}
+
+.ghost {
+ background:#14251b;
+ color:white;
+ border:1px solid var(--line);
+ border-radius:30px;
+ padding:11px 18px;
+}
+
+.actions {
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-top:15px;
+}
+
+.sectionhead {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:28px 0 14px;
+}
+
+.sectionhead h2 {
+ margin:0;
+}
+
+.muted {
+ color:var(--muted);
+ font-size:13px;
+}
+
+.top {
+ display:flex;
+ gap:9px;
+ overflow-x:auto;
+ padding:10px 15px;
+ max-width:1100px;
+ margin:auto;
+}
+
+.chip {
+ border:1px solid var(--line);
+ background:#102018;
+ color:white;
+ border-radius:30px;
+ padding:10px 17px;
+ white-space:nowrap;
+}
+
+.chip.active {
+ background:var(--green);
+ color:#07130d;
+}
+
+.grid {
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:14px;
+}
+
+.card {
+ background:#12251a;
+ border:1px solid #294234;
+ border-radius:15px;
+ padding:12px;
+ min-width:0;
+}
+
+.cover {
+ width:100%;
+ aspect-ratio:1;
+ object-fit:cover;
+ border-radius:10px;
+}
+
+.card h3 {
+ font-size:14px;
+ margin:10px 0 5px;
+}
+
+.card p {
+ color:var(--muted);
+ font-size:12px;
+}
+
+.cardactions {
+ display:flex;
+ justify-content:space-between;
+}
+
+.iconbtn {
+ border:0;
+ background:#1b3425;
+ color:var(--green);
+ border-radius:50%;
+ width:37px;
+ height:37px;
+ font-size:17px;
+}
+
+.panel {
+ background:var(--panel);
+ border:1px solid var(--line);
+ padding:18px;
+ border-radius:16px;
+ margin:15px 0;
+}
+
+input {
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ background:#09150e;
+ border:1px solid #34503e;
+ border-radius:10px;
+ color:white;
+ outline:none;
+}
+
+input:focus {
+ border-color:var(--green);
+}
+
+label {
+ color:#c6d8cb;
+ font-size:12px;
+}
+
+.song {
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:11px 0;
+ border-bottom:1px solid #294234;
+}
+
+.song img {
+ width:52px;
+ height:52px;
+ object-fit:cover;
+ border-radius:9px;
+}
+
+.songinfo {
+ flex:1;
+ min-width:0;
+}
+
+.songinfo strong {
+ display:block;
+ overflow:hidden;
+ white-space:nowrap;
+ text-overflow:ellipsis;
+}
+
+.songinfo p {
+ color:var(--muted);
+ font-size:12px;
+ margin:5px 0;
+}
+
+.msg {
+ color:var(--green);
+ font-size:13px;
+ line-height:1.5;
+}
+
+.empty {
+ background:#102018;
+ padding:22px;
+ border-radius:13px;
+ color:var(--muted);
+ text-align:center;
+}
+
+.premiumgrid {
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:15px;
+}
+
+.plan {
+ background:linear-gradient(145deg,#302819,#142017);
+ border:1px solid #806a34;
+ border-radius:16px;
+ padding:20px;
+}
+
+.plan h3 {
+ color:var(--gold);
+}
+
+.price {
+ font-size:27px;
+ font-weight:bold;
+}
+
+.bottomplayer {
+ position:fixed;
+ left:12px;
+ right:12px;
+ bottom:78px;
+ background:#14251b;
+ border:1px solid #31523b;
+ border-radius:15px;
+ padding:12px;
+ display:none;
+ align-items:center;
+ gap:12px;
+ z-index:8;
+}
+
+.bottomplayer img {
+ width:45px;
+ height:45px;
+ object-fit:cover;
+ border-radius:8px;
+}
+
+.playerinfo {
+ flex:1;
+ min-width:0;
+}
+
+.playerinfo strong,
+.playerinfo p {
+ display:block;
+ overflow:hidden;
+ white-space:nowrap;
+ text-overflow:ellipsis;
+}
+
+.playerinfo p {
+ color:var(--muted);
+ font-size:11px;
+}
+
+.playercontrols {
+ display:flex;
+ gap:5px;
+}
+
+.playercontrols button {
+ background:none;
+ border:0;
+ color:white;
+ font-size:20px;
+}
+
+.progressrow {
+ position:absolute;
+ left:12px;
+ right:12px;
+ bottom:2px;
+ display:flex;
+ align-items:center;
+ gap:7px;
+ font-size:9px;
+}
+
+.progressrow input {
+ flex:1;
+ padding:0;
+ height:3px;
+}
+
+.bottomnav {
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ height:72px;
+ background:#050b07;
+ border-top:1px solid #203729;
+ display:flex;
+ justify-content:space-around;
+ align-items:center;
+ z-index:9;
+}
+
+.bottomnav button {
+ background:none;
+ border:0;
+ color:#9caf9f;
+ font-size:10px;
+ display:flex;
+ flex-direction:column;
+ gap:4px;
+ align-items:center;
+}
+
+.bottomnav button span {
+ font-size:21px;
+}
+
+.bottomnav button.active {
+ color:var(--green);
+}
+
+@media(max-width:700px) {
+ .grid {
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+
+ .hero {
+  grid-template-columns:1fr;
+ }
+
+ .hero-art {
+  min-height:130px;
+ }
+
+ .premiumgrid {
+  grid-template-columns:1fr;
+ }
+}
 </style>
 </head>
 
 <body>
 
 <header>
- <div class="logo">S</div>
- <div class="brand">SHAGA MUSIC</div>
+ <div style="display:flex;align-items:center;gap:12px">
+  <div class="logo">S</div>
+  <div>
+   <div class="brand">SHAGA MUSIC</div>
+   <small class="muted">SOUND WITHOUT LIMITS</small>
+  </div>
+ </div>
+
+ <div class="account" id="accountStatus">
+ ● Guest mode
+ </div>
 </header>
 
 <nav class="top">
- <button class="chip active">All</button>
- <button class="chip">Music</button>
- <button class="chip">Podcasts</button>
- <button class="chip">Audiobooks</button>
+ <button class="chip active" data-genre="all">All</button>
+ <button class="chip" data-genre="afrobeats">Afrobeats</button>
+ <button class="chip" data-genre="hip-hop">Hip-hop</button>
+ <button class="chip" data-genre="r&b">R&B</button>
+ <button class="chip" data-genre="gospel">Gospel</button>
+ <button class="chip" data-genre="pop">Pop</button>
 </nav>
 
 <main>
 
+<!-- HOME -->
+
 <section id="home" class="page active">
 
- <div class="quick">
-  <div><img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=200" alt=""><span>Michael Jackson Mix</span></div>
-  <div><img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200" alt=""><span>My Dear</span></div>
-  <div><img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=200" alt=""><span>Grime Mix</span></div>
-  <div><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200" alt=""><span>Afrobeats Mix</span></div>
- </div>
-
- <h2>Picked for you</h2>
-
- <div class="feature">
-  <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400" alt="">
+ <div class="hero">
   <div>
-   <p>SHAGA MUSIC PLAYLIST</p>
-   <h3>Discover New Music</h3>
-   <p>Find your next favourite artist.</p>
-   <button class="green" id="explore">Explore ▶</button>
+   <p style="color:var(--green)">WELCOME TO A NEW SOUND</p>
+
+   <h1>Your music.<br>Your moment.</h1>
+
+   <p>
+    Discover fresh sounds, support emerging artists
+    and build your own soundtrack with SHAGA MUSIC.
+   </p>
+
+   <div class="actions">
+    <button class="green" id="explore">Explore Music ↗</button>
+    <button class="ghost" data-goto="create">Join SHAGA</button>
+   </div>
   </div>
+
+  <div class="hero-art">♫</div>
  </div>
 
- <h2>Your top mixes</h2>
-
- <div class="horizontal">
-  <div class="mix">
-   <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300" alt="">
-   <h3>Afrobeats Mix</h3><p>African sounds</p>
-  </div>
-  <div class="mix">
-   <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300" alt="">
-   <h3>Rap Mix</h3><p>Hip-hop favourites</p>
-  </div>
-  <div class="mix">
-   <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300" alt="">
-   <h3>Pop Mix</h3><p>Popular music</p>
-  </div>
+ <div class="sectionhead">
+  <h2>Fresh on SHAGA</h2>
+  <span class="muted">New releases</span>
  </div>
 
- <h2>Latest uploads</h2>
- <div id="homeSongs">Loading music...</div><br>
+ <div id="homeSongs" class="grid">
+  <div class="empty">Loading music...</div>
+ </div>
 
-<h2>🔥 TRENDING MUSIC</h2>
+ <div class="sectionhead">
+  <h2>SHAGA TOP 10</h2>
+  <span class="muted">Trending</span>
+ </div>
 
-<div class="panel">
-  <h3>🔥 SHAGA TOP 10</h3>
-  <p>Discover the hottest music on SHAGA MUSIC.</p>
-  <div id="trendingSongs">
-    Loading trending music...
-  </div>
-</div>
+ <div class="panel" id="trendingSongs">
+  Loading tracks...
+ </div>
 
 </section>
+
+<!-- SEARCH -->
 
 <section id="search" class="page">
- <h2>Search</h2>
- <input id="searchInput" placeholder="Search songs or artists">
+
+ <div class="sectionhead">
+  <h2>Find your sound</h2>
+ </div>
+
+ <input id="searchInput"
+ placeholder="Search songs, artists or genres...">
+
  <div id="searchResults"></div>
+
 </section>
+
+<!-- LIBRARY -->
 
 <section id="library" class="page">
- <h2>Your Library</h2>
- <div id="librarySongs">Your music will appear here.</div>
+
+ <div class="sectionhead">
+  <h2>Your Library ♡</h2>
+ </div>
+
+ <p class="muted">Your saved favourites.</p>
+
+ <div id="librarySongs">
+  <div class="empty">Save songs with the ♡ button.</div>
+ </div>
+
 </section>
+
+<!-- PREMIUM -->
 
 <section id="premium" class="page">
- <h2>SHAGA PREMIUM</h2>
- <div class="panel">
-  <h3>Gold</h3>
-  <h2>4,000 RWF/month</h2>
-  <p>Enjoy a premium listening experience.</p>
-  <button class="green" id="gold">Explore Gold</button>
+
+ <div class="sectionhead">
+  <h2>SHAGA PREMIUM ✦</h2>
  </div>
- <div class="panel">
-  <h3>VIP</h3>
-  <h2>6,000 RWF/month</h2>
-  <p>Discover more exclusive music.</p>
-  <button class="green" id="vip">Explore VIP</button>
+
+ <div class="premiumgrid">
+
+  <div class="plan">
+   <h3>SHAGA GOLD</h3>
+   <div class="price">4,000 RWF</div>
+   <p class="muted">Monthly membership.</p>
+   <p>Premium music collections.</p>
+   <button class="green planbtn" data-plan="Gold">
+    Explore Gold
+   </button>
+  </div>
+
+  <div class="plan">
+   <h3>SHAGA VIP</h3>
+   <div class="price">6,000 RWF</div>
+   <p class="muted">Monthly membership.</p>
+   <p>Exclusive VIP collections.</p>
+   <button class="green planbtn" data-plan="VIP">
+    Explore VIP
+   </button>
+  </div>
+
  </div>
- <p class="msg" id="premiumMsg">Subscriptions are not activated yet.</p>
+
+ <p class="msg" id="premiumMsg">
+  Preview mode. Payments are not activated.
+ </p>
+
 </section>
 
+<!-- ACCOUNT -->
+
 <section id="create" class="page">
- <h2>Artist Studio</h2>
+
+ <div class="sectionhead">
+  <h2>Your SHAGA Account</h2>
+ </div>
 
  <div class="panel">
+
   <h3>Create Account</h3>
 
-<input id="regName" type="text" placeholder="Full name">
+  <label>Full name</label>
+  <input id="regName" placeholder="Your full name">
 
-<input id="regUsername" type="text" placeholder="Choose a username">
+  <label>Username</label>
+  <input id="regUsername" placeholder="Choose username">
 
+  <label>Email address</label>
+  <input id="regEmail" type="email" placeholder="Email address">
 
+  <label>Password</label>
+  <input id="regPassword" type="password" placeholder="Create password">
 
-<input id="regPassword" type="password" placeholder="Create password">
+  <button class="green" id="register">
+   Create Account
+  </button>
 
-<button class="green" id="register">Create Account</button>
-  
-  
-  
+  <hr style="border-color:#294234;margin:22px 0">
 
   <h3>Login</h3>
+
+  <label>Email address</label>
   <input id="loginEmail" type="email" placeholder="Email">
+
+  <label>Password</label>
   <input id="loginPassword" type="password" placeholder="Password">
-  <button class="green" id="login">Login</button>
-  <button class="green" id="logout">Logout</button>
+
+  <div class="actions">
+   <button class="green" id="login">Login</button>
+   <button class="ghost" id="logout">Logout</button>
+  </div>
+
   <p class="msg" id="accountMsg"></p>
+
  </div>
 
+ <!-- ARTIST STUDIO -->
+
  <div class="panel">
-  <h3>Upload your music</h3>
+
+  <h3>ARTIST STUDIO 🎤</h3>
+
+  <p class="muted">
+   Upload music you created or have permission to distribute.
+  </p>
+
+  <label>Song title</label>
   <input id="title" placeholder="Song title">
+
+  <label>Artist name</label>
   <input id="artist" placeholder="Artist name">
-  <input id="genre" placeholder="Genre">
-  <p>Music file</p>
+
+  <label>Music genre</label>
+  <input id="genre" placeholder="Afrobeats, Pop, R&B...">
+
+  <label>Audio file (maximum 20 MB)</label>
   <input id="audioFile" type="file" accept="audio/*">
-  <p>Cover image</p>
+
+  <label>Cover image (maximum 5 MB)</label>
   <input id="coverFile" type="file" accept="image/*">
-  <button class="green" id="upload">Upload Music</button>
+
+  <button class="green" id="upload">
+   Upload Music
+  </button>
+
   <p class="msg" id="uploadMsg"></p>
+
  </div>
 
- <div class="panel">
-  <h3>SHAGA MUSIC ORIGINALS</h3>
-  <p>Discover the next generation of music stars.</p>
- </div>
 </section>
 
 </main>
 
+<!-- MUSIC PLAYER -->
+
 <div class="bottomplayer" id="bottomPlayer">
- <img id="playerCover" alt="">
+
+ <img id="playerCover" alt="Album cover">
+
  <div class="playerinfo">
-  <strong id="playerTitle">No song playing</strong>
+  <strong id="playerTitle">Nothing playing</strong>
   <p id="playerArtist">SHAGA MUSIC</p>
  </div>
- <button id="playPause">▶</button>
+
+ <div class="playercontrols">
+  <button id="prevSong">⏮</button>
+  <button id="playPause">▶</button>
+  <button id="nextSong">⏭</button>
+ </div>
+
+ <div class="progressrow">
+  <span id="currentTime">0:00</span>
+  <input id="progress" type="range" min="0" max="100" value="0">
+  <span id="duration">0:00</span>
+ </div>
+
 </div>
 
 <audio id="audioPlayer"></audio>
 
+<!-- NAVIGATION -->
+
 <nav class="bottomnav">
- <button class="active" data-page="home"><span>⌂</span>Home</button>
- <button data-page="search"><span>⌕</span>Search</button>
- <button data-page="library"><span>▤</span>Your Library</button>
- <button data-page="premium"><span>◎</span>Premium</button>
- <button data-page="create"><span>＋</span>Create</button>
+
+ <button class="active" data-page="home">
+  <span>⌂</span>Home
+ </button>
+
+ <button data-page="search">
+  <span>⌕</span>Search
+ </button>
+
+ <button data-page="library">
+  <span>♡</span>Library
+ </button>
+
+ <button data-page="premium">
+  <span>✦</span>Premium
+ </button>
+
+ <button data-page="create">
+  <span>＋</span>Account
+ </button>
+
 </nav>
 
 <script type="module">
 
-import { createClient } from
-'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const supabase=createClient(
+const supabase = createClient(
  'https://ohyuasaubmfqeeybrhbs.supabase.co',
  'sb_publishable_2TI-TmUvPk48Z2WW3UN1Uw_E5KmXaaM'
 );
 
-const $=id=>document.getElementById(id);
-let songs=[];
+const $ = id => document.getElementById(id);
 
-function page(name){
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
- $(name).classList.add('active');
+const FALLBACK_COVER =
+ 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300';
 
- document.querySelectorAll('.bottomnav button').forEach(x=>{
-  x.classList.toggle('active',x.dataset.page===name);
+let songs = [];
+let currentIndex = -1;
+let activeGenre = 'all';
+
+let favorites = JSON.parse(
+ localStorage.getItem('shagaFavorites') || '[]'
+);
+
+function safe(value) {
+ return String(value ?? '').replace(/[&<>"']/g,c=>({
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  '"':'&quot;',
+  "'":'&#39;'
+ }[c]));
+}
+
+function coverFor(song) {
+ if(!song.cover_path) return FALLBACK_COVER;
+
+ return supabase.storage
+  .from('music')
+  .getPublicUrl(song.cover_path).data.publicUrl;
+}
+
+function audioFor(song) {
+ return supabase.storage
+  .from('music')
+  .getPublicUrl(song.audio_path).data.publicUrl;
+}
+
+function message(id,text) {
+ $(id).textContent = text;
+}
+
+function formatTime(seconds) {
+ if(!Number.isFinite(seconds)) return '0:00';
+
+ return Math.floor(seconds/60)+':' +
+  String(Math.floor(seconds%60)).padStart(2,'0');
+}
+
+/* NAVIGATION */
+
+function goTo(name) {
+
+ document.querySelectorAll('.page').forEach(page=>{
+  page.classList.toggle('active',page.id===name);
  });
 
- if(['home','library','search'].includes(name)) loadSongs();
+ document.querySelectorAll('.bottomnav button').forEach(btn=>{
+  btn.classList.toggle('active',btn.dataset.page===name);
+ });
+
+ if(name==='library') renderLibrary();
+ if(name==='search') renderSearch();
 }
 
-document.querySelectorAll('.bottomnav button').forEach(button=>{
- button.addEventListener('click',()=>page(button.dataset.page));
+document.querySelectorAll('[data-page]').forEach(btn=>{
+ btn.addEventListener('click',()=>goTo(btn.dataset.page));
 });
 
-$('explore').onclick=()=>page('search');
-
-$('searchInput').addEventListener('input',renderSongs);
-
-document.querySelectorAll('.chip').forEach(button=>{
- button.onclick=()=>{
-  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
-  button.classList.add('active');
- };
+document.querySelectorAll('[data-goto]').forEach(btn=>{
+ btn.addEventListener('click',()=>goTo(btn.dataset.goto));
 });
 
-function safe(value){
- return String(value||'').replace(/[&<>"']/g,c=>({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
- })[c]);
-}
+$('explore').onclick=()=>goTo('search');
 
-$('register').onclick=async()=>{
-  const name=$('regName').value.trim();
-  const username=$('regUsername').value.trim();
-  const email=$('regEmail').value.trim();
-  const password=$('regPassword').value;
+/* GENRES */
 
-  if(!name || !username || !email || password.length<6){
-    $('accountMsg').textContent='Fill in all fields. Password must be at least 6 characters.';
-    return;
-  }<input id="regEmail" type="email" placeholder="Email address">
+document.querySelectorAll('[data-genre]').forEach(btn=>{
 
-  $('accountMsg').textContent='Creating account...';
+ btn.onclick=()=>{
 
-  const {data,error}=await supabase.auth.signUp({
-    email,
-    password,
-    options:{
-      data:{
-        full_name:name,
-        username:username
-      }
-    }
+  activeGenre=btn.dataset.genre;
+
+  document.querySelectorAll('[data-genre]').forEach(x=>{
+   x.classList.toggle('active',x===btn);
   });
 
-  $('accountMsg').textContent=error
-    ? error.message
-    : 'Account created! Welcome to SHAGA MUSIC.';
-};
+  renderHome();
+ };
 
-$('login').onclick=async()=>{
- const {error}=await supabase.auth.signInWithPassword({
-  email:$('loginEmail').value.trim(),
-  password:$('loginPassword').value
+});
+
+/* MUSIC CARDS */
+
+function cardHTML(song,index) {
+
+ return `
+ <article class="card">
+
+  <img class="cover"
+   src="${safe(coverFor(song))}"
+   alt="Song cover">
+
+  <h3>${safe(song.title)}</h3>
+
+  <p>
+   ${safe(song.artist_name)}
+   · ${safe(song.genre || 'Music')}
+  </p>
+
+  <div class="cardactions">
+
+   <button class="iconbtn" data-play="${index}">
+    ▶
+   </button>
+
+   <button class="iconbtn" data-fav="${safe(song.id)}">
+    ${favorites.includes(String(song.id))?'♥':'♡'}
+   </button>
+
+  </div>
+
+ </article>
+ `;
+}
+
+function listHTML(song,index) {
+
+ return `
+ <div class="song">
+
+  <img src="${safe(coverFor(song))}" alt="">
+
+  <div class="songinfo">
+   <strong>${safe(song.title)}</strong>
+   <p>${safe(song.artist_name)} · ${safe(song.genre||'Music')}</p>
+  </div>
+
+  <button class="iconbtn" data-play="${index}">
+   ▶
+  </button>
+
+  <button class="iconbtn" data-fav="${safe(song.id)}">
+   ${favorites.includes(String(song.id))?'♥':'♡'}
+  </button>
+
+ </div>
+ `;
+}
+
+function bindSongButtons(root=document) {
+
+ root.querySelectorAll('[data-play]').forEach(btn=>{
+  btn.onclick=()=>playSong(Number(btn.dataset.play));
  });
 
- $('accountMsg').textContent=error?error.message:'You are logged in!';
-};
-
-$('logout').onclick=async()=>{
- const {error}=await supabase.auth.signOut();
- $('accountMsg').textContent=error?error.message:'Logged out.';
-};
-
-$('upload').onclick=async()=>{
- const title=$('title').value.trim();
- const artist=$('artist').value.trim();
- const audio=$('audioFile').files[0];
- const cover=$('coverFile').files[0];
-
- if(!title||!artist||!audio){
-  $('uploadMsg').textContent='Enter the title, artist and audio file.';
-  return;
- }
-
- if(audio.size>20*1024*1024||(cover&&cover.size>5*1024*1024)){
-  $('uploadMsg').textContent='Audio limit: 20 MB. Cover limit: 5 MB.';
-  return;
- }
-
- $('uploadMsg').textContent='Uploading...';
-
- const {data:userData,error:userError}=await supabase.auth.getUser();
-
- if(userError||!userData.user){
-  $('uploadMsg').textContent='Please log in first.';
-  return;
- }
-
- const user=userData.user;
- const clean=f=>f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
- const audioPath=user.id+'/'+Date.now()+'-'+clean(audio);
-
- const {error:audioError}=await supabase.storage.from('music').upload(audioPath,audio);
-
- if(audioError){
-  $('uploadMsg').textContent=audioError.message;
-  return;
- }
-
- let coverPath=null;
-
- if(cover){
-  coverPath=user.id+'/'+Date.now()+'-'+clean(cover);
-  const {error}=await supabase.storage.from('music').upload(coverPath,cover);
-
-  if(error){
-   await supabase.storage.from('music').remove([audioPath]);
-   $('uploadMsg').textContent=error.message;
-   return;
-  }
- }
-
- const {error}=await supabase.from('tracks').insert({
-  user_id:user.id,
-  title,
-  artist_name:artist,
-  genre:$('genre').value.trim(),
-  audio_path:audioPath,
-  cover_path:coverPath,
-  published:true
+ root.querySelectorAll('[data-fav]').forEach(btn=>{
+  btn.onclick=()=>toggleFavorite(btn.dataset.fav);
  });
+}
 
- if(error){
-  await supabase.storage.from('music').remove([audioPath]);
-  if(coverPath) await supabase.storage.from('music').remove([coverPath]);
-  $('uploadMsg').textContent=error.message;
-  return;
- }
+/* HOME */
 
- $('uploadMsg').textContent='Music uploaded successfully!';
- loadSongs();
-};
+function renderHome() {
 
-async function loadSongs(){
+ const filtered=songs.filter(song=>
+  activeGenre==='all' ||
+  String(song.genre||'').toLowerCase().includes(activeGenre)
+ );
+
+ $('homeSongs').innerHTML=filtered.length
+  ?filtered.slice(0,8).map(song=>
+   cardHTML(song,songs.indexOf(song))
+  ).join('')
+  :'<div class="empty">No music in this category yet.</div>';
+
+ const top=songs.slice(0,10);
+
+ $('trendingSongs').innerHTML=top.length
+  ?top.map((song,i)=>`
+   <div class="song">
+
+    <strong style="color:var(--green)">${i+1}</strong>
+
+    <img src="${safe(coverFor(song))}" alt="">
+
+    <div class="songinfo">
+     <strong>${safe(song.title)}</strong>
+     <p>${safe(song.artist_name)}</p>
+    </div>
+
+    <button class="iconbtn" data-play="${songs.indexOf(song)}">
+     ▶
+    </button>
+
+   </div>
+  `).join('')
+  :'<div class="empty">No music uploaded yet.</div>';
+
+ bindSongButtons();
+}
+
+/* SEARCH */
+
+function renderSearch() {
+
+ const q=$('searchInput').value.trim().toLowerCase();
+
+ const found=songs.filter(song=>
+  [song.title,song.artist_name,song.genre].some(value=>
+   String(value||'').toLowerCase().includes(q)
+  )
+ );
+
+ $('searchResults').innerHTML=found.length
+  ?found.map(song=>listHTML(song,songs.indexOf(song))).join('')
+  :'<div class="empty">No matching music found.</div>';
+
+ bindSongButtons($('searchResults'));
+}
+
+$('searchInput').oninput=renderSearch;
+
+/* FAVOURITES */
+
+function toggleFavorite(id) {
+
+ id=String(id);
+
+ favorites=favorites.includes(id)
+  ?favorites.filter(x=>x!==id)
+  :[...favorites,id];
+
+ localStorage.setItem(
+  'shagaFavorites',
+  JSON.stringify(favorites)
+ );
+
+ renderHome();
+ renderSearch();
+ renderLibrary();
+}
+
+function renderLibrary() {
+
+ const saved=songs.filter(song=>
+  favorites.includes(String(song.id))
+ );
+
+ $('librarySongs').innerHTML=saved.length
+  ?saved.map(song=>listHTML(song,songs.indexOf(song))).join('')
+  :'<div class="empty">No favourites yet. Tap ♡ to save music.</div>';
+
+ bindSongButtons($('librarySongs'));
+}
+
+/* LOAD MUSIC */
+
+async function loadSongs() {
+
  const {data,error}=await supabase
   .from('tracks')
   .select('*')
   .eq('published',true)
   .order('created_at',{ascending:false});
 
- if(error){
-  $('homeSongs').textContent='Music loading error: '+error.message;
-  $('librarySongs').textContent=error.message;
-  $('searchResults').textContent=error.message;
+ if(error) {
+
+  $('homeSongs').innerHTML=
+   '<div class="empty">Unable to load music. Check your Supabase database.</div>';
+
+  $('trendingSongs').textContent=error.message;
+
   return;
  }
 
  songs=data||[];
- renderSongs();
+
+ renderHome();
+ renderSearch();
+ renderLibrary();
 }
 
-function renderSongs(){
- const q=$('searchInput').value.toLowerCase();
+/* ACCOUNT SYSTEM */
 
- const filtered=songs.filter(s=>
-  (s.title||'').toLowerCase().includes(q)||
-  (s.artist_name||'').toLowerCase().includes(q)
+async function refreshUser() {
+
+ const {data}=await supabase.auth.getUser();
+
+ const user=data?.user;
+
+ $('accountStatus').textContent=user
+  ?'● '+(user.user_metadata?.username||user.email)
+  :'● Guest mode';
+}
+
+$('register').onclick=async()=>{
+
+ const name=$('regName').value.trim();
+ const username=$('regUsername').value.trim();
+ const email=$('regEmail').value.trim();
+ const password=$('regPassword').value;
+
+ if(!name||!username||!email||password.length<6) {
+
+  message(
+   'accountMsg',
+   'Complete all fields. Password must contain at least 6 characters.'
+  );
+
+  return;
+ }
+
+ message('accountMsg','Creating account...');
+
+ const {data,error}=await supabase.auth.signUp({
+
+  email,
+  password,
+
+  options:{
+   data:{
+    full_name:name,
+    username:username
+   }
+  }
+
+ });
+
+ if(error) {
+  message('accountMsg',error.message);
+  return;
+ }
+
+ message(
+  'accountMsg',
+  data.session
+   ?'Account created successfully!'
+   :'Account created. Check your email to confirm your account.'
  );
 
- const html=filtered.map(song=>{
-  const index=songs.indexOf(song);
-  const audioURL=supabase.storage.from('music').getPublicUrl(song.audio_path).data.publicUrl;
-  const coverURL=song.cover_path?
-   supabase.storage.from('music').getPublicUrl(song.cover_path).data.publicUrl:'';
+ await refreshUser();
+};
 
-  return `<div class="song">
-   <img src="${coverURL||'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100'}" alt="">
-   <div class="songinfo">
-    <strong>${safe(song.title)}</strong>
-    <p>${safe(song.artist_name)}</p>
-   </div>
-   <button data-play="${index}">▶</button>
-  </div>`;
- }).join('');
+$('login').onclick=async()=>{
 
- $('homeSongs').innerHTML=html||'<p>No songs uploaded yet.</p>';
- $('librarySongs').innerHTML=html||'<p>Your library is waiting for music.</p>';
- $('searchResults').innerHTML=html||'<p>No matching songs found.</p>';
+ const email=$('loginEmail').value.trim();
+ const password=$('loginPassword').value;
 
- document.querySelectorAll('[data-play]').forEach(button=>{
-  button.onclick=()=>playSong(Number(button.dataset.play));
+ if(!email||!password) {
+  message('accountMsg','Enter your email and password.');
+  return;
+ }
+
+ message('accountMsg','Logging in...');
+
+ const {error}=await supabase.auth.signInWithPassword({
+  email,
+  password
  });
-}
 
-function playSong(index){
+ message(
+  'accountMsg',
+  error?error.message:'Welcome back to SHAGA MUSIC!'
+ );
+
+ await refreshUser();
+};
+
+$('logout').onclick=async()=>{
+
+ const {error}=await supabase.auth.signOut();
+
+ message(
+  'accountMsg',
+  error?error.message:'You have logged out.'
+ );
+
+ await refreshUser();
+};
+
+supabase.auth.onAuthStateChange(()=>{
+ refreshUser();
+});
+
+/* ARTIST STUDIO */
+
+$('upload').onclick=async()=>{
+
+ const title=$('title').value.trim();
+ const artist=$('artist').value.trim();
+ const genre=$('genre').value.trim();
+
+ const audio=$('audioFile').files[0];
+ const cover=$('coverFile').files[0];
+
+ if(!title||!artist||!audio) {
+  message('uploadMsg','Enter the song title, artist and audio file.');
+  return;
+ }
+
+ if(!audio.type.startsWith('audio/')) {
+  message('uploadMsg','Choose a valid audio file.');
+  return;
+ }
+
+ if(audio.size>20*1024*1024) {
+  message('uploadMsg','Audio must be smaller than 20 MB.');
+  return;
+ }
+
+ if(cover && (!cover.type.startsWith('image/') || cover.size>5*1024*1024)) {
+  message('uploadMsg','Cover must be an image smaller than 5 MB.');
+  return;
+ }
+
+ const {data:userData}=await supabase.auth.getUser();
+
+ if(!userData.user) {
+  message('uploadMsg','Please log in before uploading music.');
+  return;
+ }
+
+ message('uploadMsg','Uploading music...');
+
+ const user=userData.user;
+
+ const clean=name=>name.replace(/[^a-zA-Z0-9._-]/g,'_');
+
+ const stamp=Date.now();
+
+ const audioPath=user.id+'/'+stamp+'-'+clean(audio.name);
+
+ const {error:audioError}=await supabase.storage
+  .from('music')
+  .upload(audioPath,audio);
+
+ if(audioError) {
+  message('uploadMsg',audioError.message);
+  return;
+ }
+
+ let coverPath=null;
+
+ if(cover) {
+
+  coverPath=user.id+'/'+stamp+'-'+clean(cover.name);
+
+  const {error}=await supabase.storage
+   .from('music')
+   .upload(coverPath,cover);
+
+  if(error) {
+   await supabase.storage.from('music').remove([audioPath]);
+   message('uploadMsg',error.message);
+   return;
+  }
+ }
+
+ const {error:dbError}=await supabase
+  .from('tracks')
+  .insert({
+
+   user_id:user.id,
+   title,
+   artist_name:artist,
+   genre,
+   audio_path:audioPath,
+   cover_path:coverPath,
+   published:true
+
+  });
+
+ if(dbError) {
+
+  await supabase.storage.from('music').remove([audioPath]);
+
+  if(coverPath) {
+   await supabase.storage.from('music').remove([coverPath]);
+  }
+
+  message('uploadMsg',dbError.message);
+  return;
+ }
+
+ message('uploadMsg','Your music was uploaded successfully!');
+
+ $('title').value='';
+ $('artist').value='';
+ $('genre').value='';
+ $('audioFile').value='';
+ $('coverFile').value='';
+
+ await loadSongs();
+};
+
+/* MUSIC PLAYER */
+
+function playSong(index) {
+
  const song=songs[index];
+
  if(!song)return;
 
- const audioURL=supabase.storage.from('music').getPublicUrl(song.audio_path).data.publicUrl;
- const coverURL=song.cover_path?
-  supabase.storage.from('music').getPublicUrl(song.cover_path).data.publicUrl:'';
+ currentIndex=index;
 
- $('audioPlayer').src=audioURL;
+ $('audioPlayer').src=audioFor(song);
+
  $('playerTitle').textContent=song.title;
  $('playerArtist').textContent=song.artist_name;
- $('playerCover').src=coverURL||'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100';
+ $('playerCover').src=coverFor(song);
+
  $('bottomPlayer').style.display='flex';
 
  $('audioPlayer').play()
-  .then(()=>$('playPause').textContent='Ⅱ')
-  .catch(()=>$('playPause').textContent='▶');
+  .catch(()=>message(
+   'premiumMsg',
+   'Audio could not play. Check the music file and storage permissions.'
+  ));
 }
 
 $('playPause').onclick=()=>{
+
  const audio=$('audioPlayer');
 
- if(audio.paused){
-  audio.play().then(()=>$('playPause').textContent='Ⅱ');
- }else{
+ if(audio.paused) {
+  audio.play().catch(()=>{});
+ } else {
   audio.pause();
-  $('playPause').textContent='▶';
  }
 };
 
-$('audioPlayer').onended=()=>$('playPause').textContent='▶';
+$('prevSong').onclick=()=>{
 
-$('gold').onclick=()=>{
-  $('premiumMsg').textContent=
-  'TEST MODE: Gold selected! 4,000 RWF/month. No payment has been made.';
+ if(songs.length) {
+  playSong((currentIndex-1+songs.length)%songs.length);
+ }
 };
 
-$('vip').onclick=()=>{
-  $('premiumMsg').textContent=
-  'TEST MODE: VIP selected! 6,000 RWF/month. Enter the code to verify.';
+$('nextSong').onclick=()=>{
+
+ if(songs.length) {
+  playSong((currentIndex+1)%songs.length);
+ }
 };
 
-loadSongs();
+$('audioPlayer').addEventListener('timeupdate',()=>{
+
+ const audio=$('audioPlayer');
+
+ $('currentTime').textContent=formatTime(audio.currentTime);
+
+ $('duration').textContent=formatTime(audio.duration);
+
+ $('progress').value=audio.duration
+  ?audio.currentTime/audio.duration*100
+  :0;
+
+});
+
+$('progress').oninput=()=>{
+
+ const audio=$('audioPlayer');
+
+ if(audio.duration) {
+  audio.currentTime=
+   Number($('progress').value)/100*audio.duration;
+ }
+};
+
+$('audioPlayer').addEventListener('play',()=>{
+ $('playPause').textContent='Ⅱ';
+});
+
+$('audioPlayer').addEventListener('pause',()=>{
+ $('playPause').textContent='▶';
+});
+
+$('audioPlayer').addEventListener('ended',()=>{
+ if(songs.length) {
+  playSong((currentIndex+1)%songs.length);
+ }
+});
+
+/* PREMIUM */
+
+document.querySelectorAll('.planbtn').forEach(btn=>{
+
+ btn.onclick=()=>{
+
+  $('premiumMsg').textContent=
+   btn.dataset.plan+
+   ' selected. Payment is not activated yet.';
+
+ };
+
+});
+
+/* START */
+
+await refreshUser();
+await loadSongs();
 
 </script>
+
 </body>
- </html>
+</html>
