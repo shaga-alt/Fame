@@ -592,28 +592,46 @@ label {
 
   <h3>Create Account</h3>
 
-  <label>Full name</label>
-  <input id="regName" placeholder="Your full name">
+  $('register').onclick = async () => {
+const name = $('regName').value.trim();
+const username = $('regUsername').value.trim();
+const email = $('regEmail').value.trim();
+const password = $('regPassword').value;
 
-  <label>Username</label>
-  <input id="regUsername" placeholder="Choose username">
+if (!name || !username || !email || password.length < 6) {
+$('accountMsg').textContent =
+'Please complete all fields. Password must have at least 6 characters.';
+return;
+}
 
-  <label>Email address</label>
-  }
+$('accountMsg').textContent = 'Creating your account...';
 
-  <label>Password</label>
-  <input id="regPassword" type="password" placeholder="Create password">
+try {
+const { data, error } = await supabase.auth.signUp({
+email: email,
+password: password,
+options: {
+data: {
+full_name: name,
+username: username
+}
+}
+});
 
-  <button class="green" id="register">
-   Create Account
-  </button>
+if (error) {
+  $('accountMsg').textContent = error.message;
+  return;
+}
 
-  <hr style="border-color:#294234;margin:22px 0">
+$('accountMsg').textContent = data.session
+  ? 'Account created successfully! Welcome to SHAGA MUSIC!'
+  : 'Account created! Please check your email to confirm registration.';
 
-  <h3>Login</h3>
-
-  <label>Email address</label>
-  <input id="loginEmail" type="email" placeholder="Email">
+} catch (error) {
+$('accountMsg').textContent =
+'Connection problem: ' + error.message;
+}
+};
 
   <label>Password</label>
   <input id="loginPassword" type="password" placeholder="Password">
