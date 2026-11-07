@@ -1,441 +1,214 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07130d">
-<title>SHAGA MUSIC | Sound Without Limits</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHAGA MUSIC</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root {
- --bg:#07130d;
- --panel:#102018;
- --green:#39e879;
- --muted:#a6b7ab;
- --gold:#f4cf68;
- --line:#294234;
+  --bg: #07110d;
+  --panel: #102219;
+  --green: #35e879;
+  --text: #ffffff;
+  --muted: #a7b8ad;
 }
 
 * {
- box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 body {
- margin:0;
- background:radial-gradient(circle at 80% 0%,#173c27,#07130d 55%);
- color:white;
- font-family:Arial,sans-serif;
- padding-bottom:150px;
-}
-
-button,input {
- font:inherit;
-}
-
-button {
- cursor:pointer;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
 }
 
 header {
- max-width:1100px;
- margin:auto;
- padding:20px;
- display:flex;
- align-items:center;
- justify-content:space-between;
-}
-
-.brand {
- font-size:20px;
- font-weight:900;
- letter-spacing:2px;
+  background: #0d1d14;
+  padding: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .logo {
- background:var(--green);
- color:#07130d;
- padding:12px;
- border-radius:13px;
- font-weight:900;
- font-size:22px;
+  color: var(--green);
+  font-size: 23px;
+  font-weight: bold;
 }
 
-.account {
- color:var(--green);
- font-size:12px;
+button {
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 8px;
+  background: var(--green);
+  color: #06130b;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-main {
- max-width:1100px;
- margin:auto;
- padding:15px;
-}
-
-.page {
- display:none;
-}
-
-.page.active {
- display:block;
-}
-
-.hero {
- background:linear-gradient(120deg,#174d2d,#102018);
- border:1px solid #28583a;
- border-radius:22px;
- padding:25px;
- display:grid;
- grid-template-columns:1.4fr .8fr;
- gap:20px;
-}
-
-.hero h1 {
- font-size:clamp(35px,6vw,58px);
- line-height:1.05;
-}
-
-.hero p {
- color:#c4d8ca;
- line-height:1.6;
-}
-
-.hero-art {
- min-height:190px;
- border-radius:18px;
- background:
- linear-gradient(#39e87933,#07130d88),
- url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=700')
- center/cover;
- display:grid;
- place-items:center;
- font-size:65px;
-}
-
-.green {
- background:var(--green);
- color:#07130d;
- border:0;
- border-radius:30px;
- padding:12px 20px;
- font-weight:bold;
-}
-
-.ghost {
- background:#14251b;
- color:white;
- border:1px solid var(--line);
- border-radius:30px;
- padding:11px 18px;
-}
-
-.actions {
- display:flex;
- gap:10px;
- flex-wrap:wrap;
- margin-top:15px;
-}
-
-.sectionhead {
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin:28px 0 14px;
-}
-
-.sectionhead h2 {
- margin:0;
-}
-
-.muted {
- color:var(--muted);
- font-size:13px;
-}
-
-.top {
- display:flex;
- gap:9px;
- overflow-x:auto;
- padding:10px 15px;
- max-width:1100px;
- margin:auto;
-}
-
-.chip {
- border:1px solid var(--line);
- background:#102018;
- color:white;
- border-radius:30px;
- padding:10px 17px;
- white-space:nowrap;
-}
-
-.chip.active {
- background:var(--green);
- color:#07130d;
-}
-
-.grid {
- display:grid;
- grid-template-columns:repeat(4,minmax(0,1fr));
- gap:14px;
-}
-
-.card {
- background:#12251a;
- border:1px solid #294234;
- border-radius:15px;
- padding:12px;
- min-width:0;
-}
-
-.cover {
- width:100%;
- aspect-ratio:1;
- object-fit:cover;
- border-radius:10px;
-}
-
-.card h3 {
- font-size:14px;
- margin:10px 0 5px;
-}
-
-.card p {
- color:var(--muted);
- font-size:12px;
-}
-
-.cardactions {
- display:flex;
- justify-content:space-between;
-}
-
-.iconbtn {
- border:0;
- background:#1b3425;
- color:var(--green);
- border-radius:50%;
- width:37px;
- height:37px;
- font-size:17px;
-}
-
-.panel {
- background:var(--panel);
- border:1px solid var(--line);
- padding:18px;
- border-radius:16px;
- margin:15px 0;
+button.secondary {
+  background: #263b2e;
+  color: white;
 }
 
 input {
- width:100%;
- padding:13px;
- margin:7px 0;
- background:#09150e;
- border:1px solid #34503e;
- border-radius:10px;
- color:white;
- outline:none;
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0;
+  border: 1px solid #355342;
+  border-radius: 8px;
+  background: #0a1810;
+  color: white;
 }
 
-input:focus {
- border-color:var(--green);
+nav {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  background: #0c1b12;
 }
 
-label {
- color:#c6d8cb;
- font-size:12px;
+nav button {
+  white-space: nowrap;
 }
 
-.song {
- display:flex;
- align-items:center;
- gap:12px;
- padding:11px 0;
- border-bottom:1px solid #294234;
+main {
+  max-width: 1050px;
+  margin: auto;
+  padding: 18px;
+  padding-bottom: 120px;
 }
 
-.song img {
- width:52px;
- height:52px;
- object-fit:cover;
- border-radius:9px;
+.page {
+  display: none;
 }
 
-.songinfo {
- flex:1;
- min-width:0;
+.page.active {
+  display: block;
 }
 
-.songinfo strong {
- display:block;
- overflow:hidden;
- white-space:nowrap;
- text-overflow:ellipsis;
+.hero {
+  background: linear-gradient(120deg, #123c25, #102219, #07110d);
+  border-radius: 18px;
+  padding: 35px 22px;
+  margin: 15px 0 25px;
 }
 
-.songinfo p {
- color:var(--muted);
- font-size:12px;
- margin:5px 0;
+.hero h1 {
+  font-size: 35px;
+  margin-bottom: 10px;
 }
 
-.msg {
- color:var(--green);
- font-size:13px;
- line-height:1.5;
+.green {
+  color: var(--green);
 }
 
-.empty {
- background:#102018;
- padding:22px;
- border-radius:13px;
- color:var(--muted);
- text-align:center;
+.section-title {
+  margin-top: 28px;
 }
 
-.premiumgrid {
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:15px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 14px;
 }
 
-.plan {
- background:linear-gradient(145deg,#302819,#142017);
- border:1px solid #806a34;
- border-radius:16px;
- padding:20px;
+.card {
+  background: var(--panel);
+  padding: 13px;
+  border-radius: 13px;
+  overflow: hidden;
 }
 
-.plan h3 {
- color:var(--gold);
+.cover {
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #1d7441, #0a1710);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  margin-bottom: 10px;
 }
 
-.price {
- font-size:27px;
- font-weight:bold;
+.card h3 {
+  font-size: 15px;
+  margin: 5px 0;
+  overflow-wrap: anywhere;
 }
 
-.bottomplayer {
- position:fixed;
- left:12px;
- right:12px;
- bottom:78px;
- background:#14251b;
- border:1px solid #31523b;
- border-radius:15px;
- padding:12px;
- display:none;
- align-items:center;
- gap:12px;
- z-index:8;
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 5px 0 10px;
 }
 
-.bottomplayer img {
- width:45px;
- height:45px;
- object-fit:cover;
- border-radius:8px;
+.card button {
+  margin: 3px 2px 3px 0;
 }
 
-.playerinfo {
- flex:1;
- min-width:0;
+.panel {
+  background: var(--panel);
+  padding: 20px;
+  border-radius: 14px;
+  margin: 15px 0;
 }
 
-.playerinfo strong,
-.playerinfo p {
- display:block;
- overflow:hidden;
- white-space:nowrap;
- text-overflow:ellipsis;
+.message {
+  color: var(--green);
+  min-height: 22px;
+  font-size: 14px;
 }
 
-.playerinfo p {
- color:var(--muted);
- font-size:11px;
+.small {
+  color: var(--muted);
+  font-size: 13px;
 }
 
-.playercontrols {
- display:flex;
- gap:5px;
+#player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #102219;
+  padding: 12px 16px;
+  border-top: 1px solid #31513c;
+  z-index: 20;
 }
 
-.playercontrols button {
- background:none;
- border:0;
- color:white;
- font-size:20px;
+#player audio {
+  width: 100%;
+  height: 35px;
 }
 
-.progressrow {
- position:absolute;
- left:12px;
- right:12px;
- bottom:2px;
- display:flex;
- align-items:center;
- gap:7px;
- font-size:9px;
+#nowPlaying {
+  font-size: 13px;
+  color: var(--green);
+  margin-bottom: 5px;
 }
 
-.progressrow input {
- flex:1;
- padding:0;
- height:3px;
+.hidden {
+  display: none !important;
 }
 
-.bottomnav {
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- height:72px;
- background:#050b07;
- border-top:1px solid #203729;
- display:flex;
- justify-content:space-around;
- align-items:center;
- z-index:9;
-}
+@media(max-width:500px) {
+  .hero h1 {
+    font-size: 27px;
+  }
 
-.bottomnav button {
- background:none;
- border:0;
- color:#9caf9f;
- font-size:10px;
- display:flex;
- flex-direction:column;
- gap:4px;
- align-items:center;
-}
-
-.bottomnav button span {
- font-size:21px;
-}
-
-.bottomnav button.active {
- color:var(--green);
-}
-
-@media(max-width:700px) {
- .grid {
-  grid-template-columns:repeat(2,minmax(0,1fr));
- }
-
- .hero {
-  grid-template-columns:1fr;
- }
-
- .hero-art {
-  min-height:130px;
- }
-
- .premiumgrid {
-  grid-template-columns:1fr;
- }
+  main {
+    padding: 12px;
+  }
 }
 </style>
 </head>
@@ -443,909 +216,651 @@ label {
 <body>
 
 <header>
- <div style="display:flex;align-items:center;gap:12px">
-  <div class="logo">S</div>
-  <div>
-   <div class="brand">SHAGA MUSIC</div>
-   <small class="muted">SOUND WITHOUT LIMITS</small>
-  </div>
- </div>
-
- <div class="account" id="accountStatus">
- ● Guest mode
- </div>
+  <div class="logo">SHAGA MUSIC</div>
+  <button onclick="showPage('account')">Account</button>
 </header>
 
-<nav class="top">
- <button class="chip active" data-genre="all">All</button>
- <button class="chip" data-genre="afrobeats">Afrobeats</button>
- <button class="chip" data-genre="hip-hop">Hip-hop</button>
- <button class="chip" data-genre="r&b">R&B</button>
- <button class="chip" data-genre="gospel">Gospel</button>
- <button class="chip" data-genre="pop">Pop</button>
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button class="secondary" onclick="showPage('explore')">Explore</button>
+  <button class="secondary" onclick="showPage('library')">Library</button>
+  <button class="secondary" onclick="showPage('premium')">Premium</button>
+  <button class="secondary" onclick="showPage('studio')">Artist Studio</button>
 </nav>
 
 <main>
 
 <!-- HOME -->
-
 <section id="home" class="page active">
 
- <div class="hero">
-  <div>
-   <p style="color:var(--green)">WELCOME TO A NEW SOUND</p>
-
-   <h1>Your music.<br>Your moment.</h1>
-
-   <p>
-    Discover fresh sounds, support emerging artists
-    and build your own soundtrack with SHAGA MUSIC.
-   </p>
-
-   <div class="actions">
-    <button class="green" id="explore">Explore Music ↗</button>
-    <button class="ghost" data-goto="create">Join SHAGA</button>
-   </div>
+  <div class="hero">
+    <p class="green">WELCOME TO YOUR MUSIC WORLD</p>
+    <h1>Discover your next favourite song.</h1>
+    <p class="small">Listen, explore and enjoy music with SHAGA MUSIC.</p>
+    <button onclick="showPage('explore')">Explore Music</button>
   </div>
 
-  <div class="hero-art">♫</div>
- </div>
-
- <div class="sectionhead">
-  <h2>Fresh on SHAGA</h2>
-  <span class="muted">New releases</span>
- </div>
-
- <div id="homeSongs" class="grid">
-  <div class="empty">Loading music...</div>
- </div>
-
- <div class="sectionhead">
-  <h2>SHAGA TOP 10</h2>
-  <span class="muted">Trending</span>
- </div>
-
- <div class="panel" id="trendingSongs">
-  Loading tracks...
- </div>
+  <h2 class="section-title">Trending Music</h2>
+  <div id="homeTracks" class="grid"></div>
 
 </section>
 
-<!-- SEARCH -->
+<!-- EXPLORE -->
+<section id="explore" class="page">
 
-<section id="search" class="page">
+  <h2>Explore Music</h2>
 
- <div class="sectionhead">
-  <h2>Find your sound</h2>
- </div>
+  <input id="searchInput"
+    type="search"
+    placeholder="Search songs or artists..."
+    oninput="renderTracks()">
 
- <input id="searchInput"
- placeholder="Search songs, artists or genres...">
-
- <div id="searchResults"></div>
+  <div id="allTracks" class="grid"></div>
 
 </section>
 
 <!-- LIBRARY -->
-
 <section id="library" class="page">
 
- <div class="sectionhead">
-  <h2>Your Library ♡</h2>
- </div>
+  <h2>Your Library ❤️</h2>
+  <p class="small">Your favourite songs are saved on this device.</p>
 
- <p class="muted">Your saved favourites.</p>
-
- <div id="librarySongs">
-  <div class="empty">Save songs with the ♡ button.</div>
- </div>
+  <div id="favouriteTracks" class="grid"></div>
 
 </section>
 
 <!-- PREMIUM -->
-
 <section id="premium" class="page">
 
- <div class="sectionhead">
-  <h2>SHAGA PREMIUM ✦</h2>
- </div>
-
- <div class="premiumgrid">
-
-  <div class="plan">
-   <h3>SHAGA GOLD</h3>
-   <div class="price">4,000 RWF</div>
-   <p class="muted">Monthly membership.</p>
-   <p>Premium music collections.</p>
-   <button class="green planbtn" data-plan="Gold">
-    Explore Gold
-   </button>
+  <div class="hero">
+    <h1>SHAGA <span class="green">PREMIUM</span></h1>
+    <p>Enjoy a premium music experience.</p>
   </div>
 
-  <div class="plan">
-   <h3>SHAGA VIP</h3>
-   <div class="price">6,000 RWF</div>
-   <p class="muted">Monthly membership.</p>
-   <p>Exclusive VIP collections.</p>
-   <button class="green planbtn" data-plan="VIP">
-    Explore VIP
-   </button>
+  <div class="grid">
+
+    <div class="card">
+      <h2>GOLD</h2>
+      <h2 class="green">4,000 RWF/month</h2>
+      <p>Premium membership preview.</p>
+      <button onclick="premiumMessage()">Choose Gold</button>
+    </div>
+
+    <div class="card">
+      <h2>VIP</h2>
+      <h2 class="green">6,000 RWF/month</h2>
+      <p>VIP membership preview.</p>
+      <button onclick="premiumMessage()">Choose VIP</button>
+    </div>
+
   </div>
 
- </div>
-
- <p class="msg" id="premiumMsg">
-  Preview mode. Payments are not activated.
- </p>
+  <p id="premiumMsg" class="message"></p>
 
 </section>
 
 <!-- ACCOUNT -->
+<section id="account" class="page">
 
-<section id="create" class="page">
+  <h2>Your Account</h2>
 
- <div class="sectionhead">
-  <h2>Your SHAGA Account</h2>
- </div>
+  <div class="panel" id="registerPanel">
 
- <div class="panel">
+    <h3>Create your account</h3>
 
-  <h3>Create Account</h3>
+    <input id="regName" placeholder="Full name">
+    <input id="regUsername" placeholder="Choose a username">
+    <input id="regEmail" type="email" placeholder="Email address">
+    <input id="regPassword" type="password" placeholder="Create password">
 
-  $('register').onclick = async () => {
-const name = $('regName').value.trim();
-const username = $('regUsername').value.trim();
-const email = $('regEmail').value.trim();
-const password = $('regPassword').value;
+    <button onclick="registerUser()">Create Account</button>
 
-if (!name || !username || !email || password.length < 6) {
-$('accountMsg').textContent =
-'Please complete all fields. Password must have at least 6 characters.';
-return;
-}
+    <p id="registerMsg" class="message"></p>
 
-$('accountMsg').textContent = 'Creating your account...';
-
-try {
-const { data, error } = await supabase.auth.signUp({
-email: email,
-password: password,
-options: {
-data: {
-full_name: name,
-username: username
-}
-}
-});
-
-if (error) {
-  $('accountMsg').textContent = error.message;
-  return;
-}
-
-$('accountMsg').textContent = data.session
-  ? 'Account created successfully! Welcome to SHAGA MUSIC!'
-  : 'Account created! Please check your email to confirm registration.';
-
-} catch (error) {
-$('accountMsg').textContent =
-'Connection problem: ' + error.message;
-}
-};
-
-  <label>Password</label>
-  <input id="loginPassword" type="password" placeholder="Password">
-
-  <div class="actions">
-   <button class="green" id="login">Login</button>
-   <button class="ghost" id="logout">Logout</button>
   </div>
 
-  <p class="msg" id="accountMsg"></p>
+  <div class="panel">
 
- </div>
+    <h3>Login</h3>
 
- <!-- ARTIST STUDIO -->
+    <input id="loginEmail" type="email" placeholder="Email address">
+    <input id="loginPassword" type="password" placeholder="Password">
 
- <div class="panel">
+    <button onclick="loginUser()">Login</button>
 
-  <h3>ARTIST STUDIO 🎤</h3>
+    <p id="loginMsg" class="message"></p>
 
-  <p class="muted">
-   Upload music you created or have permission to distribute.
-  </p>
+  </div>
 
-  <label>Song title</label>
-  <input id="title" placeholder="Song title">
+  <div class="panel">
 
-  <label>Artist name</label>
-  <input id="artist" placeholder="Artist name">
+    <h3>Account Information</h3>
 
-  <label>Music genre</label>
-  <input id="genre" placeholder="Afrobeats, Pop, R&B...">
+    <p id="userInfo" class="small">You are not logged in.</p>
 
-  <label>Audio file (maximum 20 MB)</label>
-  <input id="audioFile" type="file" accept="audio/*">
+    <button class="secondary" onclick="logoutUser()">Logout</button>
 
-  <label>Cover image (maximum 5 MB)</label>
-  <input id="coverFile" type="file" accept="image/*">
+    <p id="logoutMsg" class="message"></p>
 
-  <button class="green" id="upload">
-   Upload Music
-  </button>
+  </div>
 
-  <p class="msg" id="uploadMsg"></p>
+</section>
 
- </div>
+<!-- ARTIST STUDIO -->
+<section id="studio" class="page">
+
+  <h2>Artist Studio 🎤</h2>
+
+  <div class="panel">
+
+    <p>Upload your music to SHAGA MUSIC.</p>
+    <p class="small">You must sign in before uploading.</p>
+
+    <input id="songTitle" placeholder="Song title">
+    <input id="artistName" placeholder="Artist name">
+
+    <input id="songGenre" placeholder="Genre">
+
+    <label>Select an audio file:</label>
+    <input id="songFile" type="file" accept="audio/*">
+
+    <button onclick="uploadSong()">Upload Music</button>
+
+    <p id="uploadMsg" class="message"></p>
+
+  </div>
 
 </section>
 
 </main>
 
 <!-- MUSIC PLAYER -->
+<div id="player">
 
-<div class="bottomplayer" id="bottomPlayer">
+  <div id="nowPlaying">Select a song to start listening.</div>
 
- <img id="playerCover" alt="Album cover">
-
- <div class="playerinfo">
-  <strong id="playerTitle">Nothing playing</strong>
-  <p id="playerArtist">SHAGA MUSIC</p>
- </div>
-
- <div class="playercontrols">
-  <button id="prevSong">⏮</button>
-  <button id="playPause">▶</button>
-  <button id="nextSong">⏭</button>
- </div>
-
- <div class="progressrow">
-  <span id="currentTime">0:00</span>
-  <input id="progress" type="range" min="0" max="100" value="0">
-  <span id="duration">0:00</span>
- </div>
+  <audio id="audioPlayer" controls></audio>
 
 </div>
 
-<audio id="audioPlayer"></audio>
+<script>
+/* ==================================
+   SHAGA MUSIC CONFIGURATION
+================================== */
 
-<!-- NAVIGATION -->
+const SUPABASE_URL =
+  "https://ohyuasaubmfqeeybrhbs.supabase.co";
 
-<nav class="bottomnav">
+const SUPABASE_KEY =
+  "sb_publishable_2TI-TmUvPk48Z2WW3UN1Uw_E5KmXaaM";
 
- <button class="active" data-page="home">
-  <span>⌂</span>Home
- </button>
-
- <button data-page="search">
-  <span>⌕</span>Search
- </button>
-
- <button data-page="library">
-  <span>♡</span>Library
- </button>
-
- <button data-page="premium">
-  <span>✦</span>Premium
- </button>
-
- <button data-page="create">
-  <span>＋</span>Account
- </button>
-
-</nav>
-
-<script type="module">
-
-import { createClient }
-from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-const supabase = createClient(
- 'https://ohyuasaubmfqeeybrhbs.supabase.co',
- 'sb_publishable_2TI-TmUvPk48Z2WW3UN1Uw_E5KmXaaM'
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-const $ = id => document.getElementById(id);
+let tracks = [];
+let currentUser = null;
 
-const FALLBACK_COVER =
- 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300';
-
-let songs = [];
-let currentIndex = -1;
-let activeGenre = 'all';
-
-let favorites = JSON.parse(
- localStorage.getItem('shagaFavorites') || '[]'
+let favourites = JSON.parse(
+  localStorage.getItem("shagaFavourites") || "[]"
 );
 
-function safe(value) {
- return String(value ?? '').replace(/[&<>"']/g,c=>({
-  '&':'&amp;',
-  '<':'&lt;',
-  '>':'&gt;',
-  '"':'&quot;',
-  "'":'&#39;'
- }[c]));
-}
+/* ==================================
+   PAGE NAVIGATION
+================================== */
 
-function coverFor(song) {
- if(!song.cover_path) return FALLBACK_COVER;
+function showPage(pageName) {
 
- return supabase.storage
-  .from('music')
-  .getPublicUrl(song.cover_path).data.publicUrl;
-}
-
-function audioFor(song) {
- return supabase.storage
-  .from('music')
-  .getPublicUrl(song.audio_path).data.publicUrl;
-}
-
-function message(id,text) {
- $(id).textContent = text;
-}
-
-function formatTime(seconds) {
- if(!Number.isFinite(seconds)) return '0:00';
-
- return Math.floor(seconds/60)+':' +
-  String(Math.floor(seconds%60)).padStart(2,'0');
-}
-
-/* NAVIGATION */
-
-function goTo(name) {
-
- document.querySelectorAll('.page').forEach(page=>{
-  page.classList.toggle('active',page.id===name);
- });
-
- document.querySelectorAll('.bottomnav button').forEach(btn=>{
-  btn.classList.toggle('active',btn.dataset.page===name);
- });
-
- if(name==='library') renderLibrary();
- if(name==='search') renderSearch();
-}
-
-document.querySelectorAll('[data-page]').forEach(btn=>{
- btn.addEventListener('click',()=>goTo(btn.dataset.page));
-});
-
-document.querySelectorAll('[data-goto]').forEach(btn=>{
- btn.addEventListener('click',()=>goTo(btn.dataset.goto));
-});
-
-$('explore').onclick=()=>goTo('search');
-
-/* GENRES */
-
-document.querySelectorAll('[data-genre]').forEach(btn=>{
-
- btn.onclick=()=>{
-
-  activeGenre=btn.dataset.genre;
-
-  document.querySelectorAll('[data-genre]').forEach(x=>{
-   x.classList.toggle('active',x===btn);
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
   });
 
-  renderHome();
- };
+  const page = document.getElementById(pageName);
 
-});
+  if (page) {
+    page.classList.add("active");
+  }
 
-/* MUSIC CARDS */
+  if (pageName === "library") {
+    renderFavourites();
+  }
 
-function cardHTML(song,index) {
+  if (pageName === "account") {
+    updateAccount();
+  }
 
- return `
- <article class="card">
-
-  <img class="cover"
-   src="${safe(coverFor(song))}"
-   alt="Song cover">
-
-  <h3>${safe(song.title)}</h3>
-
-  <p>
-   ${safe(song.artist_name)}
-   · ${safe(song.genre || 'Music')}
-  </p>
-
-  <div class="cardactions">
-
-   <button class="iconbtn" data-play="${index}">
-    ▶
-   </button>
-
-   <button class="iconbtn" data-fav="${safe(song.id)}">
-    ${favorites.includes(String(song.id))?'♥':'♡'}
-   </button>
-
-  </div>
-
- </article>
- `;
 }
 
-function listHTML(song,index) {
+/* ==================================
+   CREATE ACCOUNT
+================================== */
 
- return `
- <div class="song">
+async function registerUser() {
 
-  <img src="${safe(coverFor(song))}" alt="">
+  const name = document.getElementById("regName").value.trim();
+  const username = document.getElementById("regUsername").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const password = document.getElementById("regPassword").value;
 
-  <div class="songinfo">
-   <strong>${safe(song.title)}</strong>
-   <p>${safe(song.artist_name)} · ${safe(song.genre||'Music')}</p>
-  </div>
+  const msg = document.getElementById("registerMsg");
 
-  <button class="iconbtn" data-play="${index}">
-   ▶
-  </button>
+  if (!name || !username || !email || password.length < 6) {
+    msg.textContent = "Complete all fields. Password must be at least 6 characters.";
+    return;
+  }
 
-  <button class="iconbtn" data-fav="${safe(song.id)}">
-   ${favorites.includes(String(song.id))?'♥':'♡'}
-  </button>
+  msg.textContent = "Creating your account...";
 
- </div>
- `;
+  try {
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: name,
+          username: username
+        }
+      }
+    });
+
+    if (error) {
+      msg.textContent = error.message;
+      return;
+    }
+
+    msg.textContent = data.session
+      ? "Account created successfully!"
+      : "Account created. Check your email to confirm it.";
+
+    updateAccount();
+
+  } catch (error) {
+    msg.textContent = "Connection error: " + error.message;
+  }
+
 }
 
-function bindSongButtons(root=document) {
+/* ==================================
+   LOGIN
+================================== */
 
- root.querySelectorAll('[data-play]').forEach(btn=>{
-  btn.onclick=()=>playSong(Number(btn.dataset.play));
- });
+async function loginUser() {
 
- root.querySelectorAll('[data-fav]').forEach(btn=>{
-  btn.onclick=()=>toggleFavorite(btn.dataset.fav);
- });
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  const msg = document.getElementById("loginMsg");
+
+  if (!email || !password) {
+    msg.textContent = "Enter your email and password.";
+    return;
+  }
+
+  msg.textContent = "Logging in...";
+
+  try {
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    if (error) {
+      msg.textContent = error.message;
+      return;
+    }
+
+    currentUser = data.user;
+    msg.textContent = "Welcome back!";
+
+    updateAccount();
+
+  } catch (error) {
+    msg.textContent = error.message;
+  }
+
 }
 
-/* HOME */
+/* ==================================
+   LOGOUT
+================================== */
 
-function renderHome() {
+async function logoutUser() {
 
- const filtered=songs.filter(song=>
-  activeGenre==='all' ||
-  String(song.genre||'').toLowerCase().includes(activeGenre)
- );
+  const { error } = await supabaseClient.auth.signOut();
 
- $('homeSongs').innerHTML=filtered.length
-  ?filtered.slice(0,8).map(song=>
-   cardHTML(song,songs.indexOf(song))
-  ).join('')
-  :'<div class="empty">No music in this category yet.</div>';
+  if (error) {
+    document.getElementById("logoutMsg").textContent = error.message;
+    return;
+  }
 
- const top=songs.slice(0,10);
+  currentUser = null;
 
- $('trendingSongs').innerHTML=top.length
-  ?top.map((song,i)=>`
-   <div class="song">
+  document.getElementById("logoutMsg").textContent = "Logged out successfully.";
 
-    <strong style="color:var(--green)">${i+1}</strong>
+  updateAccount();
 
-    <img src="${safe(coverFor(song))}" alt="">
-
-    <div class="songinfo">
-     <strong>${safe(song.title)}</strong>
-     <p>${safe(song.artist_name)}</p>
-    </div>
-
-    <button class="iconbtn" data-play="${songs.indexOf(song)}">
-     ▶
-    </button>
-
-   </div>
-  `).join('')
-  :'<div class="empty">No music uploaded yet.</div>';
-
- bindSongButtons();
 }
 
-/* SEARCH */
+/* ==================================
+   ACCOUNT STATUS
+================================== */
 
-function renderSearch() {
+async function updateAccount() {
 
- const q=$('searchInput').value.trim().toLowerCase();
+  const { data } = await supabaseClient.auth.getUser();
 
- const found=songs.filter(song=>
-  [song.title,song.artist_name,song.genre].some(value=>
-   String(value||'').toLowerCase().includes(q)
-  )
- );
+  currentUser = data.user || null;
 
- $('searchResults').innerHTML=found.length
-  ?found.map(song=>listHTML(song,songs.indexOf(song))).join('')
-  :'<div class="empty">No matching music found.</div>';
+  const info = document.getElementById("userInfo");
 
- bindSongButtons($('searchResults'));
+  if (currentUser) {
+
+    const name = currentUser.user_metadata?.full_name || currentUser.email;
+
+    info.textContent = "Signed in as: " + name;
+
+  } else {
+
+    info.textContent = "You are not logged in.";
+
+  }
+
 }
 
-$('searchInput').oninput=renderSearch;
+/* ==================================
+   LOAD MUSIC
+================================== */
 
-/* FAVOURITES */
+async function loadTracks() {
 
-function toggleFavorite(id) {
+  const { data, error } = await supabaseClient
+    .from("tracks")
+    .select("*")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
 
- id=String(id);
+  if (error) {
 
- favorites=favorites.includes(id)
-  ?favorites.filter(x=>x!==id)
-  :[...favorites,id];
+    console.error("Music loading error:", error.message);
 
- localStorage.setItem(
-  'shagaFavorites',
-  JSON.stringify(favorites)
- );
+    document.getElementById("allTracks").innerHTML =
+      "<p class='small'>Music could not load. Check your Supabase database settings.</p>";
 
- renderHome();
- renderSearch();
- renderLibrary();
+    return;
+
+  }
+
+  tracks = data || [];
+
+  renderTracks();
+
 }
 
-function renderLibrary() {
+/* ==================================
+   DISPLAY MUSIC
+================================== */
 
- const saved=songs.filter(song=>
-  favorites.includes(String(song.id))
- );
+function createTrackCard(track) {
 
- $('librarySongs').innerHTML=saved.length
-  ?saved.map(song=>listHTML(song,songs.indexOf(song))).join('')
-  :'<div class="empty">No favourites yet. Tap ♡ to save music.</div>';
+  const card = document.createElement("div");
+  card.className = "card";
 
- bindSongButtons($('librarySongs'));
+  const cover = document.createElement("div");
+  cover.className = "cover";
+  cover.textContent = "🎵";
+
+  const title = document.createElement("h3");
+  title.textContent = track.title || "Untitled";
+
+  const artist = document.createElement("p");
+  artist.textContent = track.artist_name || "Unknown artist";
+
+  const play = document.createElement("button");
+  play.textContent = "▶ Play";
+  play.onclick = () => playTrack(track);
+
+  const favourite = document.createElement("button");
+  favourite.className = "secondary";
+  favourite.textContent = favourites.includes(track.id) ? "♥" : "♡";
+  favourite.onclick = () => toggleFavourite(track.id);
+
+  card.append(cover, title, artist, play, favourite);
+
+  return card;
+
 }
 
-/* LOAD MUSIC */
+function renderTracks() {
 
-async function loadSongs() {
+  const search = (
+    document.getElementById("searchInput")?.value || ""
+  ).toLowerCase();
 
- const {data,error}=await supabase
-  .from('tracks')
-  .select('*')
-  .eq('published',true)
-  .order('created_at',{ascending:false});
+  const filtered = tracks.filter(track => {
 
- if(error) {
+    const title = (track.title || "").toLowerCase();
+    const artist = (track.artist_name || "").toLowerCase();
 
-  $('homeSongs').innerHTML=
-   '<div class="empty">Unable to load music. Check your Supabase database.</div>';
+    return title.includes(search) || artist.includes(search);
 
-  $('trendingSongs').textContent=error.message;
+  });
 
-  return;
- }
+  const all = document.getElementById("allTracks");
+  const home = document.getElementById("homeTracks");
 
- songs=data||[];
+  all.innerHTML = "";
+  home.innerHTML = "";
 
- renderHome();
- renderSearch();
- renderLibrary();
+  if (filtered.length === 0) {
+
+    all.innerHTML = "<p class='small'>No music found yet.</p>";
+    home.innerHTML = "<p class='small'>New music will appear here.</p>";
+
+    return;
+
+  }
+
+  filtered.forEach(track => {
+    all.appendChild(createTrackCard(track));
+  });
+
+  filtered.slice(0, 6).forEach(track => {
+    home.appendChild(createTrackCard(track));
+  });
+
 }
 
-/* ACCOUNT SYSTEM */
+/* ==================================
+   MUSIC PLAYER
+================================== */
 
-async function refreshUser() {
+async function playTrack(track) {
 
- const {data}=await supabase.auth.getUser();
+  const { data } = supabaseClient.storage
+    .from("music")
+    .getPublicUrl(track.audio_path);
 
- const user=data?.user;
+  const audio = document.getElementById("audioPlayer");
 
- $('accountStatus').textContent=user
-  ?'● '+(user.user_metadata?.username||user.email)
-  :'● Guest mode';
+  audio.src = data.publicUrl;
+
+  document.getElementById("nowPlaying").textContent =
+    "Now playing: " + track.title + " — " + track.artist_name;
+
+  try {
+    await audio.play();
+  } catch (error) {
+    document.getElementById("nowPlaying").textContent =
+      "Tap play on the audio player to listen.";
+  }
+
 }
 
-$('register').onclick=async()=>{
+/* ==================================
+   FAVOURITES
+================================== */
 
- const name=$('regName').value.trim();
- const username=$('regUsername').value.trim();
- const email=$('regEmail').value.trim();
- const password=$('regPassword').value;
+function toggleFavourite(id) {
 
- if(!name||!username||!email||password.length<6) {
+  if (favourites.includes(id)) {
 
-  message(
-   'accountMsg',
-   'Complete all fields. Password must contain at least 6 characters.'
+    favourites = favourites.filter(item => item !== id);
+
+  } else {
+
+    favourites.push(id);
+
+  }
+
+  localStorage.setItem(
+    "shagaFavourites",
+    JSON.stringify(favourites)
   );
 
-  return;
- }
+  renderTracks();
+  renderFavourites();
 
- message('accountMsg','Creating account...');
+}
 
- const {data,error}=await supabase.auth.signUp({
+function renderFavourites() {
 
-  email,
-  password,
+  const box = document.getElementById("favouriteTracks");
 
-  options:{
-   data:{
-    full_name:name,
-    username:username
-   }
+  box.innerHTML = "";
+
+  const saved = tracks.filter(track =>
+    favourites.includes(track.id)
+  );
+
+  if (saved.length === 0) {
+
+    box.innerHTML = "<p class='small'>You haven't added any favourites yet.</p>";
+
+    return;
+
   }
 
- });
+  saved.forEach(track => {
+    box.appendChild(createTrackCard(track));
+  });
 
- if(error) {
-  message('accountMsg',error.message);
-  return;
- }
+}
 
- message(
-  'accountMsg',
-  data.session
-   ?'Account created successfully!'
-   :'Account created. Check your email to confirm your account.'
- );
+/* ==================================
+   UPLOAD MUSIC
+================================== */
 
- await refreshUser();
-};
+async function uploadSong() {
 
-$('login').onclick=async()=>{
+  const msg = document.getElementById("uploadMsg");
 
- const email=$('loginEmail').value.trim();
- const password=$('loginPassword').value;
+  const title = document.getElementById("songTitle").value.trim();
+  const artist = document.getElementById("artistName").value.trim();
+  const genre = document.getElementById("songGenre").value.trim();
 
- if(!email||!password) {
-  message('accountMsg','Enter your email and password.');
-  return;
- }
+  const file = document.getElementById("songFile").files[0];
 
- message('accountMsg','Logging in...');
-
- const {error}=await supabase.auth.signInWithPassword({
-  email,
-  password
- });
-
- message(
-  'accountMsg',
-  error?error.message:'Welcome back to SHAGA MUSIC!'
- );
-
- await refreshUser();
-};
-
-$('logout').onclick=async()=>{
-
- const {error}=await supabase.auth.signOut();
-
- message(
-  'accountMsg',
-  error?error.message:'You have logged out.'
- );
-
- await refreshUser();
-};
-
-supabase.auth.onAuthStateChange(()=>{
- refreshUser();
-});
-
-/* ARTIST STUDIO */
-
-$('upload').onclick=async()=>{
-
- const title=$('title').value.trim();
- const artist=$('artist').value.trim();
- const genre=$('genre').value.trim();
-
- const audio=$('audioFile').files[0];
- const cover=$('coverFile').files[0];
-
- if(!title||!artist||!audio) {
-  message('uploadMsg','Enter the song title, artist and audio file.');
-  return;
- }
-
- if(!audio.type.startsWith('audio/')) {
-  message('uploadMsg','Choose a valid audio file.');
-  return;
- }
-
- if(audio.size>20*1024*1024) {
-  message('uploadMsg','Audio must be smaller than 20 MB.');
-  return;
- }
-
- if(cover && (!cover.type.startsWith('image/') || cover.size>5*1024*1024)) {
-  message('uploadMsg','Cover must be an image smaller than 5 MB.');
-  return;
- }
-
- const {data:userData}=await supabase.auth.getUser();
-
- if(!userData.user) {
-  message('uploadMsg','Please log in before uploading music.');
-  return;
- }
-
- message('uploadMsg','Uploading music...');
-
- const user=userData.user;
-
- const clean=name=>name.replace(/[^a-zA-Z0-9._-]/g,'_');
-
- const stamp=Date.now();
-
- const audioPath=user.id+'/'+stamp+'-'+clean(audio.name);
-
- const {error:audioError}=await supabase.storage
-  .from('music')
-  .upload(audioPath,audio);
-
- if(audioError) {
-  message('uploadMsg',audioError.message);
-  return;
- }
-
- let coverPath=null;
-
- if(cover) {
-
-  coverPath=user.id+'/'+stamp+'-'+clean(cover.name);
-
-  const {error}=await supabase.storage
-   .from('music')
-   .upload(coverPath,cover);
-
-  if(error) {
-   await supabase.storage.from('music').remove([audioPath]);
-   message('uploadMsg',error.message);
-   return;
+  if (!currentUser) {
+    msg.textContent = "Please log in before uploading.";
+    return;
   }
- }
 
- const {error:dbError}=await supabase
-  .from('tracks')
-  .insert({
+  if (!title || !artist || !file) {
+    msg.textContent = "Enter the song title, artist and audio file.";
+    return;
+  }
 
-   user_id:user.id,
-   title,
-   artist_name:artist,
-   genre,
-   audio_path:audioPath,
-   cover_path:coverPath,
-   published:true
+  if (!file.type.startsWith("audio/")) {
+    msg.textContent = "Please select an audio file.";
+    return;
+  }
+
+  msg.textContent = "Uploading music...";
+
+  try {
+
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+    const filePath =
+      currentUser.id + "/" + Date.now() + "_" + safeName;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from("music")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      msg.textContent = uploadError.message;
+      return;
+    }
+
+    const { error: insertError } = await supabaseClient
+      .from("tracks")
+      .insert({
+        title: title,
+        artist_name: artist,
+        genre: genre,
+        audio_path: filePath,
+        published: true,
+        user_id: currentUser.id
+      });
+
+    if (insertError) {
+      msg.textContent = "File uploaded, but saving the song failed: " + insertError.message;
+      return;
+    }
+
+    msg.textContent = "Music uploaded successfully!";
+
+    document.getElementById("songTitle").value = "";
+    document.getElementById("artistName").value = "";
+    document.getElementById("songGenre").value = "";
+    document.getElementById("songFile").value = "";
+
+    await loadTracks();
+
+  } catch (error) {
+
+    msg.textContent = "Upload problem: " + error.message;
+
+  }
+
+}
+
+/* ==================================
+   PREMIUM PREVIEW
+================================== */
+
+function premiumMessage() {
+
+  document.getElementById("premiumMsg").textContent =
+    "Premium payments are not connected yet. Membership is currently a preview.";
+
+}
+
+/* ==================================
+   START WEBSITE
+================================== */
+
+async function startWebsite() {
+
+  await updateAccount();
+
+  await loadTracks();
+
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+
+    currentUser = session?.user || null;
+
+    updateAccount();
 
   });
 
- if(dbError) {
-
-  await supabase.storage.from('music').remove([audioPath]);
-
-  if(coverPath) {
-   await supabase.storage.from('music').remove([coverPath]);
-  }
-
-  message('uploadMsg',dbError.message);
-  return;
- }
-
- message('uploadMsg','Your music was uploaded successfully!');
-
- $('title').value='';
- $('artist').value='';
- $('genre').value='';
- $('audioFile').value='';
- $('coverFile').value='';
-
- await loadSongs();
-};
-
-/* MUSIC PLAYER */
-
-function playSong(index) {
-
- const song=songs[index];
-
- if(!song)return;
-
- currentIndex=index;
-
- $('audioPlayer').src=audioFor(song);
-
- $('playerTitle').textContent=song.title;
- $('playerArtist').textContent=song.artist_name;
- $('playerCover').src=coverFor(song);
-
- $('bottomPlayer').style.display='flex';
-
- $('audioPlayer').play()
-  .catch(()=>message(
-   'premiumMsg',
-   'Audio could not play. Check the music file and storage permissions.'
-  ));
 }
 
-$('playPause').onclick=()=>{
-
- const audio=$('audioPlayer');
-
- if(audio.paused) {
-  audio.play().catch(()=>{});
- } else {
-  audio.pause();
- }
-};
-
-$('prevSong').onclick=()=>{
-
- if(songs.length) {
-  playSong((currentIndex-1+songs.length)%songs.length);
- }
-};
-
-$('nextSong').onclick=()=>{
-
- if(songs.length) {
-  playSong((currentIndex+1)%songs.length);
- }
-};
-
-$('audioPlayer').addEventListener('timeupdate',()=>{
-
- const audio=$('audioPlayer');
-
- $('currentTime').textContent=formatTime(audio.currentTime);
-
- $('duration').textContent=formatTime(audio.duration);
-
- $('progress').value=audio.duration
-  ?audio.currentTime/audio.duration*100
-  :0;
-
-});
-
-$('progress').oninput=()=>{
-
- const audio=$('audioPlayer');
-
- if(audio.duration) {
-  audio.currentTime=
-   Number($('progress').value)/100*audio.duration;
- }
-};
-
-$('audioPlayer').addEventListener('play',()=>{
- $('playPause').textContent='Ⅱ';
-});
-
-$('audioPlayer').addEventListener('pause',()=>{
- $('playPause').textContent='▶';
-});
-
-$('audioPlayer').addEventListener('ended',()=>{
- if(songs.length) {
-  playSong((currentIndex+1)%songs.length);
- }
-});
-
-/* PREMIUM */
-
-document.querySelectorAll('.planbtn').forEach(btn=>{
-
- btn.onclick=()=>{
-
-  $('premiumMsg').textContent=
-   btn.dataset.plan+
-   ' selected. Payment is not activated yet.';
-
- };
-
-});
-
-/* START */
-
-await refreshUser();
-await loadSongs();
+startWebsite();
 
 </script>
 
