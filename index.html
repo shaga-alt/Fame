@@ -865,73 +865,94 @@ startWebsite();
 </script>
 
 
+
+<button id="shaga-ai-dj" type="button">
+  🎧 SHAGA AI DJ
+  <small>Your music. Your mood. Your AI.</small>
+</button>
+
+<div id="shaga-dj-panel" hidden>
+  <h2>🎧 Welcome to SHAGA AI DJ</h2>
+  <p>Choose your mood:</p>
+
+  <button type="button" class="dj-mood" data-mood="Happy">😊 Happy</button>
+  <button type="button" class="dj-mood" data-mood="Sad">💙 Sad</button>
+  <button type="button" class="dj-mood" data-mood="Energetic">🔥 Energetic</button>
+  <button type="button" class="dj-mood" data-mood="Relaxed">🌙 Relaxed</button>
+
+  <p id="dj-result">Choose a mood to begin.</p>
+
+  <button type="button" id="dj-close">← Back to music</button>
+</div>
+
 <style>
-#dj-screen {
-  display: none;
-  background: #08120e;
-  color: white;
-  padding: 20px;
-  border-radius: 18px;
-  margin: 15px;
+#shaga-ai-dj {
+  display:block;
+  width:90%;
+  margin:25px auto;
+  padding:24px;
+  border:0;
+  border-radius:18px;
+  background:linear-gradient(135deg,#123d25,#39e879);
+  color:white;
+  font-size:24px;
+  font-weight:bold;
 }
-.dj-mood {
-  background: #193b28;
-  color: white;
-  border: 1px solid #39e879;
-  padding: 13px;
-  margin: 5px;
-  border-radius: 12px;
-  font-size: 16px;
+#shaga-ai-dj small {
+  display:block;
+  font-size:13px;
+  margin-top:8px;
 }
-#dj-result {
-  margin-top: 20px;
-  padding: 15px;
-  background: #14251b;
-  border-radius: 15px;
+#shaga-dj-panel {
+  background:#08120e;
+  color:white;
+  padding:22px;
+  margin:15px;
+  border-radius:18px;
+}
+#shaga-dj-panel[hidden] {
+  display:none !important;
+}
+.dj-mood,#dj-close {
+  padding:13px;
+  margin:5px;
+  border-radius:12px;
+  border:1px solid #39e879;
+  background:#193b28;
+  color:white;
+  font-size:16px;
 }
 </style>
 
-<button id="shaga-ai-dj" onclick="
-document.getElementById('dj-screen').style.display='block';
-document.getElementById('dj-screen').scrollIntoView({behavior:'smooth'});
-">
-🎧 SHAGA AI DJ
-<small>Your music. Your mood. Your AI.</small>
-</button>
-
-<div id="dj-screen">
-<h2>🎧 SHAGA AI DJ</h2>
-<p>Choose your current mood:</p>
-
-<button class="dj-mood" onclick="djMood('Happy')">😊 Happy</button>
-<button class="dj-mood" onclick="djMood('Sad')">💙 Sad</button>
-<button class="dj-mood" onclick="djMood('Energetic')">🔥 Energetic</button>
-<button class="dj-mood" onclick="djMood('Relaxed')">🌙 Relaxed</button>
-
-<div id="dj-result">
-Choose a mood to get started!
-</div>
-
-<button class="dj-mood" onclick="
-document.getElementById('dj-screen').style.display='none';
-window.scrollTo({top:0,behavior:'smooth'});
-">← Back to SHAGA MUSIC</button>
-</div>
-
 <script>
-function djMood(mood) {
-  const messages = {
-    Happy: "Time for positive vibes! ☀️",
-    Sad: "Let's find music that matches your feelings. 💙",
-    Energetic: "Get ready for high-energy music! 🔥",
-    Relaxed: "Enjoy some peaceful sounds. 🌙"
-  };
+(function () {
+  const button = document.getElementById("shaga-ai-dj");
+  const panel = document.getElementById("shaga-dj-panel");
+  const result = document.getElementById("dj-result");
+  const close = document.getElementById("dj-close");
 
-  document.getElementById('dj-result').innerHTML =
-    '<h3>' + mood + ' Vibes</h3><p>' +
-    messages[mood] + '</p><p>SHAGA AI DJ is ready to find your music!</p>';
-}
+  if (!button || !panel || !result || !close) return;
+
+  button.addEventListener("click", function () {
+    panel.hidden = false;
+    panel.scrollIntoView({ behavior: "smooth" });
+  });
+
+  document.querySelectorAll("#shaga-dj-panel .dj-mood")
+    .forEach(function (moodButton) {
+      moodButton.addEventListener("click", function () {
+        const mood = moodButton.dataset.mood;
+        result.textContent = mood + " mood selected! SHAGA AI DJ is ready.";
+      });
+    });
+
+  close.addEventListener("click", function () {
+    panel.hidden = true;
+    button.scrollIntoView({ behavior: "smooth" });
+  });
+})();
 </script>
+
 
 
 
