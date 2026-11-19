@@ -866,3 +866,272 @@ startWebsite();
 
 </body>
 </html>
+/* =====================================
+   SHAGA MUSIC - SMART AI DJ
+===================================== */
+
+(function () {
+  const djStyle = document.createElement("style");
+
+  djStyle.textContent = `
+    #shagaDJ {
+      padding: 18px;
+    }
+
+    #shagaDJ .dj-hero {
+      background: linear-gradient(135deg,#123d27,#07130d);
+      border: 1px solid #39e879;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    #shagaDJ .dj-moods {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    #shagaDJ .dj-mood {
+      background: #172b20;
+      color: white;
+      border: 1px solid #31513c;
+      padding: 16px 8px;
+      border-radius: 12px;
+    }
+
+    #shagaDJ .dj-mood.selected {
+      background: #39e879;
+      color: #06130b;
+    }
+
+    #shagaDJ .dj-results {
+      margin-top: 20px;
+    }
+
+    #shagaDJ .dj-song {
+      background: #102219;
+      border-radius: 12px;
+      padding: 13px;
+      margin: 9px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #shagaDJ .dj-song button {
+      flex-shrink: 0;
+    }
+  `;
+
+  document.head.appendChild(djStyle);
+
+  const nav = document.querySelector("nav");
+  const main = document.querySelector("main");
+
+  if (!nav || !main) return;
+
+  if (document.getElementById("shagaDJ")) return;
+
+  const navButton = document.createElement("button");
+  navButton.className = "secondary";
+  navButton.textContent = "🎧 AI DJ";
+  navButton.onclick = () => showPage("shagaDJ");
+  nav.appendChild(navButton);
+
+  const djPage = document.createElement("section");
+  djPage.id = "shagaDJ";
+  djPage.className = "page";
+
+  djPage.innerHTML = `
+    <div class="dj-hero">
+      <p class="green">SHAGA INTELLIGENCE</p>
+      <h1>🎧 SHAGA AI DJ</h1>
+      <p>Your music. Your mood. Your DJ.</p>
+      <p class="small">
+        Choose your mood and discover music from
+        the SHAGA MUSIC library.
+      </p>
+    </div>
+
+    <h2>How are you feeling?</h2>
+
+    <div class="dj-moods">
+      <button class="dj-mood" data-mood="energetic">
+        ⚡ Energetic
+      </button>
+
+      <button class="dj-mood" data-mood="relax">
+        🌙 Relax
+      </button>
+
+      <button class="dj-mood" data-mood="focus">
+        🎯 Focus
+      </button>
+
+      <button class="dj-mood" data-mood="party">
+        🎉 Party
+      </button>
+    </div>
+
+    <div class="panel">
+      <h3 id="djMessage">Your DJ is ready!</h3>
+      <p class="small" id="djCount">
+        Choose a mood to begin.
+      </p>
+      <button id="djShuffle">🔀 Shuffle & Play</button>
+    </div>
+
+    <div class="dj-results">
+      <h2>Your DJ Selection</h2>
+      <div id="djSongs"></div>
+    </div>
+  `;
+
+  main.appendChild(djPage);
+
+  let selectedMood = "energetic";
+  let djSelection = [];
+
+  const moodWords = {
+    energetic: [
+      "afrobeats", "dance", "pop", "hip hop",
+      "hip-hop", "edm", "upbeat", "energy"
+    ],
+
+    relax: [
+      "slow", "acoustic", "soul", "rnb",
+      "r&b", "jazz", "chill", "ambient"
+    ],
+
+    focus: [
+      "instrumental", "classical", "ambient",
+      "piano", "jazz", "lofi", "lo-fi"
+    ],
+
+    party: [
+      "dance", "afrobeats", "afrobeat",
+      "house", "edm", "party", "amapiano"
+    ]
+  };
+
+  function makeDJSelection(mood) {
+    const words = moodWords[mood];
+
+    const matching = tracks.filter(track => {
+      const information = (
+        (track.title || "") + " " +
+        (track.artist_name || "") + " " +
+        (track.genre || "")
+      ).toLowerCase();
+
+      return words.some(word => information.includes(word));
+    });
+
+    const selection = matching.length
+      ? matching
+      : [...tracks];
+
+    return selection.sort(() => Math.random() - 0.5);
+  }
+
+  function renderDJ() {
+    const songs = document.getElementById("djSongs");
+    const message = document.getElementById("djMessage");
+    const count = document.getElementById("djCount");
+
+    songs.innerHTML = "";
+
+    if (!tracks.length) {
+      message.textContent = "No music available yet.";
+      count.textContent = "Upload or publish music first.";
+      return;
+    }
+
+    djSelection = makeDJSelection(selectedMood);
+
+    message.textContent =
+      "Your " + selectedMood + " mix is ready!";
+
+    count.textContent =
+      djSelection.length + " songs selected";
+
+    if (!tracks.some(track =>
+      moodWords[selectedMood].some(word =>
+        (
+          (track.genre || "") + " " +
+          (track.title || "")
+        ).toLowerCase().includes(word)
+      )
+    )) {
+      count.textContent =
+        "No exact mood matches. Enjoy a selection from your library.";
+    }
+
+    djSelection.forEach((track, index) => {
+      const song = document.createElement("div");
+      song.className = "dj-song";
+
+      const info = document.createElement("div");
+
+      const title = document.createElement("strong");
+      title.textContent = track.title || "Untitled";
+
+      const artist = document.createElement("p");
+      artist.className = "small";
+      artist.textContent =
+        track.artist_name || "Unknown artist";
+
+      info.append(title, artist);
+
+      const play = document.createElement("button");
+      play.textContent = "▶ Play";
+
+      play.onclick = () => playTrack(track);
+
+      song.append(info, play);
+      songs.appendChild(song);
+    });
+  }
+
+  document.querySelectorAll("#shagaDJ .dj-mood")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        selectedMood = button.dataset.mood;
+
+        document.querySelectorAll("#shagaDJ .dj-mood")
+          .forEach(item => item.classList.remove("selected"));
+
+        button.classList.add("selected");
+
+        renderDJ();
+      });
+    });
+
+  document.getElementById("djShuffle")
+    .addEventListener("click", () => {
+      if (!djSelection.length) {
+        renderDJ();
+      }
+
+      if (djSelection.length) {
+        const randomSong = djSelection[
+          Math.floor(Math.random() * djSelection.length)
+        ];
+
+        playTrack(randomSong);
+      }
+    });
+
+  // Initial DJ selection
+  document.querySelector(
+    '#shagaDJ [data-mood="energetic"]'
+  ).classList.add("selected");
+
+  renderDJ();
+
+  console.log("SHAGA AI DJ loaded successfully!");
+
+})();
